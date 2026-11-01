@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ReportDesk 完整 Wiki：安装、命令、权限、配置、增强层、多语言、架构与开发指南。">
     <title>ReportDesk 文档 - 完整使用与开发 Wiki</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233b82f6'/%3E%3Ctext x='32' y='44' font-family='Arial' font-size='38' font-weight='800' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" href="icon.png">
     <style>
         /* ================= 高级 CSS 变量配置 ================= */
         :root {
@@ -70,27 +70,20 @@
             border-radius: 0 3px 3px 0;
         }
 
-        /* Logo：纯 CSS 渐变徽章（不再依赖 icon.png） */
+        /* Logo：icon.png 图片 + hover 微浮起 */
         .logo {
             width: 34px; height: 34px;
-            border-radius: 9px;
+            border-radius: 8px;
             margin-right: 12px;
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 55%, #6366f1 100%);
-            position: relative;
-            box-shadow: 0 3px 10px rgba(59,130,246,0.35), inset 0 1px 1px rgba(255,255,255,0.45);
+            object-fit: cover;
             flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(15,23,42,0.12);
+            transition: transform 0.3s var(--ease-out-back), box-shadow 0.3s var(--ease-smooth);
         }
-        .logo::before {
-            content: 'R';
-            position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; font-weight: 800; color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            text-shadow: 0 1px 2px rgba(30,58,138,0.5);
-            transform: rotate(-3deg);
-            transition: transform 0.35s var(--ease-out-back);
+        .header-left:hover .logo {
+            transform: translateY(-2px) rotate(-3deg);
+            box-shadow: 0 5px 14px rgba(59,130,246,0.25);
         }
-        .header-left:hover .logo::before { transform: rotate(3deg) scale(1.12); }
 
         /* ================= 顶部导航栏 (毛玻璃+微阴影) ================= */
         header {
@@ -267,6 +260,22 @@
             margin-top: 44px; margin-bottom: 16px;
             padding-bottom: 10px; border-bottom: 1px solid var(--border);
             scroll-margin-top: 110px; /* 锚点跳转留白（比 scroll-padding 更可靠） */
+            position: relative;
+        }
+        /* h2 左侧装饰条：当前章节时出现 */
+        .page-panel h2::before {
+            content: '';
+            position: absolute; left: -14px; top: 6px;
+            width: 3px; height: 20px;
+            background: var(--primary);
+            border-radius: 2px;
+            opacity: 0;
+            transform: scaleY(0.3);
+            transition: opacity 0.3s var(--ease-smooth), transform 0.35s var(--ease-out-back);
+        }
+        .page-panel h2.spy-active::before {
+            opacity: 1;
+            transform: scaleY(1);
         }
         .page-panel h3 {
             font-size: 18px; font-weight: 700; color: var(--text-title);
@@ -467,7 +476,7 @@
     <!-- 顶部导航 -->
     <header>
         <div class="header-left">
-            <div class="logo"></div>
+            <img class="logo" src="icon.png" alt="ReportDesk" width="34" height="34">
             <a href="index.html" style="color:inherit;">ReportDesk <span style="font-weight:400;font-size:14px;color:var(--text-muted);">文档</span></a>
         </div>
         <div class="header-right">
@@ -587,10 +596,16 @@
                 markTocActive(id);
             });
 
-            /* ---------- 5. ScrollSpy：滚动时高亮当前章节 ---------- */
+            /* ---------- 5. ScrollSpy：滚动时高亮当前章节（TOC + h2 装饰条同步） ---------- */
             function markTocActive(id) {
                 tocList.querySelectorAll('a').forEach(l =>
                     l.classList.toggle('active', l.getAttribute('data-anchor') === id));
+                // 同步 h2 左侧装饰条
+                const panel = document.querySelector('.page-panel.active');
+                if (panel) {
+                    panel.querySelectorAll('h2[id]').forEach(h =>
+                        h.classList.toggle('spy-active', h.id === id));
+                }
             }
 
             function bindToc() {
