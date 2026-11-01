@@ -134,9 +134,10 @@
     renderTables(lang);
   }
 
-  var current = "zh";
+  var current = "en";
   try {
-    current = localStorage.getItem(storeKey) === "en" ? "en" : "zh";
+    var stored = localStorage.getItem(storeKey);
+    current = stored === "zh" ? "zh" : "en";
   } catch (e) { /* 无痕模式可能拒绝 */ }
 
   apply(current);

@@ -8,15 +8,12 @@
 
   // ---------- 移动端菜单 ----------
   var toggle = document.getElementById("menuToggle");
-  var links = document.getElementById("navLinks");
-  if (toggle && links) {
+  if (toggle) {
     toggle.addEventListener("click", function () {
-      links.classList.toggle("open");
-    });
-    links.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", function () {
-        links.classList.remove("open");
-      });
+      // 没有单独的移动菜单容器，点击汉堡收起/展开 header-right 折叠区
+      var hr = toggle.closest(".header-right");
+      if (!hr) return;
+      hr.classList.toggle("open");
     });
   }
 

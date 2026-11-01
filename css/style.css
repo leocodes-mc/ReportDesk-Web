@@ -62,7 +62,7 @@ a:hover{color:var(--accent-2);text-decoration:underline;text-underline-offset:3p
 }
 .skip-link:focus{left:0;color:#fff}
 
-/* ---------- NAV（毛玻璃，与 docs.html 顶栏统一） ---------- */
+/* ---------- NAV（毛玻璃，与 download.html 顶栏统一） ---------- */
 .nav{
   position:sticky;top:0;z-index:100;
   background:rgba(255,255,255,.78);
@@ -74,54 +74,38 @@ a:hover{color:var(--accent-2);text-decoration:underline;text-underline-offset:3p
 }
 .nav.scrolled{box-shadow:0 4px 16px rgba(15,23,42,.08)}
 .nav-inner{
-  max-width:var(--maxw);margin:0 auto;padding:12px 24px;
+  max-width:var(--maxw);margin:0 auto;padding:0 40px;
+  height:64px;
   display:flex;align-items:center;justify-content:space-between;gap:14px;
 }
-.brand{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;font-size:18px;white-space:nowrap;letter-spacing:-.5px}
-.brand:hover{text-decoration:none}
-.brand img{border-radius:8px;box-shadow:0 2px 8px rgba(15,23,42,.12);transition:transform .3s var(--ease)}
-.brand:hover img{transform:translateY(-2px) rotate(-3deg)}
-.brand-ver{
-  font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent);
-  background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.3);
-  padding:2px 8px;border-radius:999px;letter-spacing:.5px;
+.header-left{display:flex;align-items:center;gap:12px;color:var(--text-title);font-weight:800;font-size:20px;letter-spacing:-.5px;white-space:nowrap}
+.header-left:hover{text-decoration:none}
+.logo{width:34px;height:34px;border-radius:8px;object-fit:cover;box-shadow:0 2px 8px rgba(15,23,42,.12);transition:transform .3s var(--ease)}
+.header-left:hover .logo{transform:translateY(-2px) rotate(-3deg)}
+.header-right{display:flex;gap:8px;align-items:center;font-size:14px;font-weight:500;color:var(--muted)}
+.header-right a{
+  color:inherit;display:inline-flex;align-items:center;padding:7px 14px;border-radius:999px;
+  transition:color .2s var(--ease),transform .25s var(--ease),background .25s var(--ease);text-decoration:none;
 }
-.links{display:flex;gap:2px;flex-wrap:wrap}
-.links a{
-  position:relative;
-  color:var(--muted);font-size:14px;font-weight:500;
-  padding:6px 10px;border-radius:8px;
-  transition:color .2s var(--ease),background .25s var(--ease);
-}
-.links a:hover{color:var(--text);background:var(--panel-2);text-decoration:none}
-.links a::after{
-  content:"";position:absolute;left:10px;right:10px;bottom:2px;height:1px;
-  background:var(--accent);transform:scaleX(0);transform-origin:left;
-  transition:transform .25s cubic-bezier(.16,.84,.3,1);
-}
-.links a:hover::after{transform:scaleX(1)}
+.header-right a:hover{color:var(--accent-2);text-decoration:none;transform:translateY(-2px);background:var(--accent-soft)}
 
-/* nav 右侧：语言 + 下载 + 汉堡 */
-.nav-actions{display:flex;align-items:center;gap:10px}
-.lang-switch{
-  display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--panel-2);
-}
+/* 语言切换（与 download.html 统一） */
+.lang-switch{display:inline-flex;gap:4px;margin-left:12px}
 .lang-btn{
   font-family:var(--mono);font-size:12px;font-weight:600;
-  background:none;border:none;color:var(--dim);padding:5px 10px;cursor:pointer;
-  transition:background .2s var(--ease),color .2s var(--ease);
-  letter-spacing:.5px;
+  padding:4px 12px;border-radius:999px;
+  border:1px solid var(--border);background:var(--bg-card);color:var(--muted);
+  cursor:pointer;transition:all .2s var(--ease);
 }
-.lang-btn:hover{color:var(--text);background:var(--hover-bg,#f1f5f9)}
-.lang-btn.active{background:var(--accent-2);color:#fff}
-.nav-dl{padding:8px 18px;font-size:14px}
-.nav-dl .nav-dl-label{white-space:nowrap}
+.lang-btn:hover{border-color:var(--accent-2);color:var(--accent-2)}
+.lang-btn.active{background:var(--accent-2);color:#fff;border-color:var(--accent-2)}
+.nav-dl{font-weight:600;color:var(--accent-2)}
 .menu-toggle{
   display:none;background:none;border:1px solid var(--border);color:var(--text);
   font-size:18px;border-radius:8px;padding:4px 12px;cursor:pointer;
   transition:border-color .2s var(--ease),background .2s var(--ease);
 }
-.menu-toggle:hover{border-color:var(--border-strong);background:var(--panel-2)}
+.menu-toggle:hover{border-color:var(--border-strong);background:var(--hover-bg)}
 
 /* ---------- HERO（浅色，柔和光晕） ---------- */
 .hero{
@@ -517,24 +501,12 @@ a:hover{color:var(--accent-2);text-decoration:underline;text-underline-offset:3p
 .docs-cta .btn{display:inline-block}
 
 /* ---------- RESPONSIVE ---------- */
-/* 移动菜单展开时显示语言切换（须放在 media 之前，桌面默认隐藏） */
-.nav-mobile-extra{display:none;padding:12px;border-top:1px solid var(--border)}
-.links.open .nav-mobile-extra{display:flex}
-.nav-mobile-extra .lang-switch{align-self:flex-start}
-
 @media(max-width:960px){
-  .links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--panel);
-    flex-direction:column;padding:12px;border-bottom:1px solid var(--border);z-index:90;
-    box-shadow:var(--shadow-md);
-  }
-  .links.open{display:flex}
-  .links a{padding:12px}
+  .nav-inner{padding:0 16px}
   .menu-toggle{display:block}
   .cmd-cols{grid-template-columns:1fr}
   .step-arrow{display:none}
   .demo-steps{flex-direction:column}
-  .nav-dl{display:none} /* 小屏下载走 hero 与仓库卡 */
-  .nav-actions .lang-switch{display:none} /* 桌面语言切换隐藏 */
 }
 @media(max-width:520px){
   .hero-stats{gap:22px}

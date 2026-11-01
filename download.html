@@ -80,9 +80,9 @@ header{
   opacity:0;transition:opacity .25s;pointer-events:none;
 }
 .dl-main:hover::before{opacity:1}
-.dl-main .ic-dl{width:22px;height:22px;position:relative;flex-shrink:0}
-.dl-main .ic-dl::before{content:"";position:absolute;left:2px;top:0;width:18px;height:18px;border-left:3px solid #fff;border-bottom:3px solid #fff}
-.dl-main .ic-dl::after{content:"";position:absolute;left:8px;bottom:0;width:3px;height:8px;background:#fff}
+.dl-main .ic-dl{width:22px;height:22px;position:relative;flex-shrink:0;color:#fff}
+.dl-main .ic-dl::before{content:"";position:absolute;left:5px;top:2px;width:12px;height:12px;border-left:2.5px solid currentColor;border-bottom:2.5px solid currentColor}
+.dl-main .ic-dl::after{content:"";position:absolute;left:10px;bottom:2px;width:2.5px;height:9px;background:currentColor;border-radius:1px}
 .dl-main .lbl{flex:1}
 .dl-main .file{font-family:var(--mono);font-size:12px;font-weight:500;opacity:.85}
 .dl-main .arrow{font-size:20px;transition:transform .2s var(--ease)}
@@ -278,8 +278,8 @@ footer{max-width:860px;margin:24px auto 40px;padding:0 24px;color:var(--text-mut
       steps: [["Install","Drop the jar into the server <b>plugins/</b> dir. No external dependencies."],["Start","The plugin creates <b>plugins/ReportDesk/config.yml</b> and lang files. Ready to use."],["Use","Players run <b>/report</b>, admins run <b>/reports</b>. Enhancements off by default."]]
     }
   };
-  var cur = "zh";
-  try { cur = localStorage.getItem("rd-site-lang") === "en" ? "en" : "zh"; } catch (e) {}
+  var cur = "en";
+  try { cur = localStorage.getItem("rd-site-lang") === "zh" ? "zh" : "en"; } catch (e) {}
   var zhBtn = document.getElementById("dlLangZh");
   var enBtn = document.getElementById("dlLangEn");
 
