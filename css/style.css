@@ -57,6 +57,11 @@ a:hover{text-decoration:underline}
 .brand{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:700;font-size:18px;white-space:nowrap}
 .brand:hover{text-decoration:none}
 .brand img{border-radius:8px}
+.brand-ver{
+  font-family:var(--mono);font-size:11px;font-weight:500;color:var(--accent);
+  background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.35);
+  padding:2px 8px;border-radius:999px;letter-spacing:.5px;
+}
 .links{display:flex;gap:2px;flex-wrap:wrap}
 .links a{
   position:relative;
@@ -431,6 +436,38 @@ a:hover{text-decoration:underline}
   will-change:transform;
 }
 
+/* ---------- 设计原则 ---------- */
+.principle-grid{margin-top:44px}
+.principle-title{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:2px;margin-bottom:16px}
+.principle-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.principle-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px 20px;
+  transition:transform .18s cubic-bezier(.16,.84,.3,1),border-color .18s;
+}
+.principle-card:hover{border-color:#33405e;transform:translateY(-2px)}
+.principle-card h3{font-size:15px;font-weight:700;margin-bottom:6px;color:var(--text)}
+.principle-card p{color:var(--muted);font-size:13.5px}
+
+/* ---------- FAQ ---------- */
+.faq{display:grid;gap:10px}
+.faq-item{
+  background:var(--panel);border:1px solid var(--border);border-radius:12px;
+  padding:14px 18px;transition:border-color .18s;
+}
+.faq-item[open]{border-color:rgba(63,185,80,.4)}
+.faq-item summary{
+  cursor:pointer;font-size:15px;font-weight:600;color:var(--text);list-style:none;
+  display:flex;align-items:center;gap:10px;
+}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::before{
+  content:"›";font-family:var(--mono);color:var(--accent);font-size:18px;
+  transition:transform .2s;flex:none;width:14px;
+}
+.faq-item[open] summary::before{transform:rotate(90deg)}
+.faq-a{margin-top:10px;color:var(--muted);font-size:14px;padding-left:24px}
+.faq-a code{font-size:12px}
+
 /* ---------- RESPONSIVE ---------- */
 @media(max-width:960px){
   .links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg-2);
@@ -442,12 +479,16 @@ a:hover{text-decoration:underline}
   .step-arrow{display:none}
   .demo-steps{flex-direction:column}
   .nav-dl{display:none} /* 小屏下载走 hero 与仓库卡 */
+  .nav-actions .lang-switch{display:none} /* 桌面语言切换隐藏 */
 }
 @media(max-width:520px){
   .hero-stats{gap:22px}
   .hero-stats b{font-size:24px}
-  .lang-switch{display:none} /* 小屏语言切换收进汉堡菜单下方？简化：隐藏，默认中文 */
 }
+/* 移动菜单展开时显示语言切换 */
+.links.open .nav-mobile-extra{display:flex}
+.nav-mobile-extra{display:none;padding:12px;border-top:1px solid var(--border)}
+.nav-mobile-extra .lang-switch{align-self:flex-start}
 
 /* ---------- 无障碍：偏好减少动画 ---------- */
 @media(prefers-reduced-motion:reduce){

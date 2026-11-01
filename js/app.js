@@ -135,6 +135,27 @@
       return "<li>" + safeHtml(li) + "</li>";
     }).join("");
 
+    /* 设计原则 */
+    var pg = document.getElementById("principleGrid");
+    if (pg) {
+      pg.innerHTML =
+        '<div class="principle-title">' + safeHtml(s["principle.title"] || "") + "</div>" +
+        '<div class="principle-cards">' +
+        D.principles.map(function (p) {
+          return "<div class='principle-card'><h3>" + safeHtml(p.t) + "</h3><p>" + safeHtml(p.d) + "</p></div>";
+        }).join("") +
+        "</div>";
+    }
+
+    /* FAQ */
+    var fl = document.getElementById("faqList");
+    if (fl) {
+      fl.innerHTML = D.faqs.map(function (f, i) {
+        return "<details class='faq-item'><summary>" + safeHtml(f.q) + "</summary>" +
+          "<div class='faq-a'>" + safeHtml(f.a) + "</div></details>";
+      }).join("");
+    }
+
     /* 线程模型表 */
     var tt = document.getElementById("threadTable");
     if (tt) {
@@ -157,6 +178,10 @@
     /* 语言按钮态 */
     document.getElementById("langZh").classList.toggle("active", lang === "zh");
     document.getElementById("langEn").classList.toggle("active", lang === "en");
+    var mZh = document.getElementById("langZhMobile");
+    var mEn = document.getElementById("langEnMobile");
+    if (mZh) mZh.classList.toggle("active", lang === "zh");
+    if (mEn) mEn.classList.toggle("active", lang === "en");
   }
 
   function apply(lang) {
@@ -179,14 +204,18 @@
 
   var zhBtn = document.getElementById("langZh");
   var enBtn = document.getElementById("langEn");
+  var zhM = document.getElementById("langZhMobile");
+  var enM = document.getElementById("langEnMobile");
   function pick(lang) {
     if (lang === current) return;
     current = lang;
     try { localStorage.setItem(storeKey, lang); } catch (e) { /* ignore */ }
     apply(lang);
   }
-  zhBtn.addEventListener("click", function () { pick("zh"); });
-  enBtn.addEventListener("click", function () { pick("en"); });
+  if (zhBtn) zhBtn.addEventListener("click", function () { pick("zh"); });
+  if (enBtn) enBtn.addEventListener("click", function () { pick("en"); });
+  if (zhM) zhM.addEventListener("click", function () { pick("zh"); });
+  if (enM) enM.addEventListener("click", function () { pick("en"); });
 
   window.RDSetLang = function (lang) {
     pick(lang === "en" ? "en" : "zh");

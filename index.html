@@ -16,6 +16,7 @@
     <a class="brand" href="#top">
       <img src="icon.png" alt="ReportDesk logo" width="34" height="34">
       <span>ReportDesk</span>
+      <span class="brand-ver" data-i18n="brand.ver">v1.0.0</span>
     </a>
     <nav class="links" id="navLinks">
       <a href="#features" data-i18n="nav.features">特性</a>
@@ -27,6 +28,12 @@
       <a href="#architecture" data-i18n="nav.architecture">架构</a>
       <a href="#roadmap" data-i18n="nav.roadmap">路线图</a>
       <a href="#install" data-i18n="nav.install">安装</a>
+      <div class="nav-mobile-extra" id="navMobileExtra">
+        <div class="lang-switch" id="langSwitchMobile">
+          <button id="langZhMobile" class="lang-btn">中</button>
+          <button id="langEnMobile" class="lang-btn">EN</button>
+        </div>
+      </div>
     </nav>
     <div class="nav-actions">
       <div class="lang-switch" id="langSwitch" title="Language / 语言">
@@ -50,6 +57,11 @@
     <div class="hero-cta">
       <a class="btn primary" href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar" target="_blank" rel="noopener" download data-i18n="hero.download">下载 1.0.0 jar</a>
       <a class="btn ghost" href="#install" data-i18n="hero.start">开始使用</a>
+    </div>
+    <div class="hero-distros">
+      <a class="distro" href="https://github.com/leocodes-mc/ReportDesk" target="_blank" rel="noopener">GitHub</a>
+      <a class="distro" href="https://hangar.papermc.io/William/ReportDesk" target="_blank" rel="noopener">Hangar</a>
+      <a class="distro" href="https://modrinth.com/plugin/reportdesk" target="_blank" rel="noopener">Modrinth</a>
     </div>
     <div class="hero-distros">
       <a class="distro" href="https://github.com/leocodes-mc/ReportDesk" target="_blank" rel="noopener">GitHub</a>
@@ -120,6 +132,9 @@
         </div>
         <p class="demo-note" data-i18n="demo.note"></p>
       </div>
+
+      <!-- 设计原则 -->
+      <div class="principle-grid" id="principleGrid"></div>
     </div>
   </section>
 
@@ -195,7 +210,7 @@
   <div class="wrap"><div class="group-bar">
     <span class="group-tag">B</span>
     <b data-i18n="group.b">使用</b>
-    <i data-i18n="group.bSub">授权 · 调参 · 本地化</i>
+    <i data-i18n="group.bSub">授权 · 调参 · 本地化 · 常见问题</i>
   </div></div>
 
   <!-- 04 PERMISSIONS -->
@@ -248,6 +263,18 @@
           <p data-i18n="i18n.safe.d"></p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- 06.5 FAQ -->
+  <section class="sec" id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">06+</span>
+        <h2 data-i18n="sec.faq">常见问题</h2>
+        <p data-i18n="sec.faqSub">来自安装文档 FAQ，覆盖绝大多数"卡住"的场景。</p>
+      </div>
+      <div class="faq" id="faqList"></div>
     </div>
   </section>
 </div>
