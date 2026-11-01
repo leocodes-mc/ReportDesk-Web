@@ -122,6 +122,8 @@ window.I18N_EN = {
     "inst.meta.licenseV": "GPL-3.0-or-later",
     "inst.meta.reload": "Hot reload",
     "inst.meta.reloadV": "/reports reload (except storage.directory)",
+    "inst.docslink": "Open the full Wiki docs →",
+    "footer.docs": "Full Wiki docs",
   },
   features: [
     { t: "Report GUI", d: "Players open a workbench: pick target → category → details → confirm. A separate admin GUI covers claim, close, reopen, delete and export." },

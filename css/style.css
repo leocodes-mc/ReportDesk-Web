@@ -468,6 +468,10 @@ a:hover{text-decoration:underline}
 .faq-a{margin-top:10px;color:var(--muted);font-size:14px;padding-left:24px}
 .faq-a code{font-size:12px}
 
+/* ---------- 安装章节内：文档入口 CTA ---------- */
+.docs-cta{margin-top:22px}
+.docs-cta .btn{display:inline-block}
+
 /* ---------- RESPONSIVE ---------- */
 /* 移动菜单展开时显示语言切换（须放在 media 之前，桌面默认隐藏） */
 .nav-mobile-extra{display:none;padding:12px;border-top:1px solid var(--border)}

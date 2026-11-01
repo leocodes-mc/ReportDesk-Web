@@ -122,6 +122,8 @@ window.I18N_ZH = {
     "inst.meta.licenseV": "GPL-3.0-or-later",
     "inst.meta.reload": "热加载",
     "inst.meta.reloadV": "/reports reload（除 storage.directory 外）",
+    "inst.docslink": "打开完整 Wiki 文档 →",
+    "footer.docs": "完整 Wiki 文档",
   },
   /* 表格数据 */
   features: [
