@@ -64,7 +64,7 @@
 
   // ---------- 滚动浮现：按视口批次入场，批内 DOM 顺序错峰 ----------
   var revealEls = document.querySelectorAll(
-    ".group-bar, .card, .demo, .cmd-block, .example, .i18n-block, .arch-block, .cfg-block, .verdict-block, .matrix, .enh-guide, .rm-group, .perm-table, .perm-tips, .install-meta div, .repo"
+    ".group-bar, .card, .demo, .example, .i18n-block, .arch-block, .cfg-block, .verdict-block, .matrix, .enh-guide, .rm-group, .perm-table, .perm-tips, .install-meta div, .repo"
   );
   revealEls.forEach(function (el) {
     el.classList.add("reveal");

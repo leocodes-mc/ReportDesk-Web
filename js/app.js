@@ -59,27 +59,7 @@
         return "<tr><td class='mc'>" + esc(r[0]) + "</td>" +
           "<td class='mk'>" + (r[1] ? "✔" : "—") + "</td>" +
           "<td class='mk'>" + (r[2] ? "✔" : "—") + "</td>" +
-          "<td class='mn'>" + safeHtml(s["matrix.note"] ? r[3] : r[3]) + "</td></tr>";
-      }).join("");
-    }
-
-    /* 命令表 */
-    function cmdRows(arr) {
-      return arr.map(function (r) {
-        return "<tr><td><code>" + esc(r[0]) + "</code></td><td>" + esc(r[1]) + "</td></tr>";
-      }).join("");
-    }
-    var pt = document.getElementById("cmdPlayerTable");
-    if (pt) pt.innerHTML = cmdRows(D.cmdsPlayer);
-    var st = document.getElementById("cmdStaffTable");
-    if (st) st.innerHTML = cmdRows(D.cmdsStaff);
-
-    /* 裁决表 */
-    var vb = document.getElementById("verdictBody");
-    if (vb) {
-      vb.innerHTML = D.verdicts.map(function (r) {
-        return "<tr><td><code>" + esc(r[0]) + "</code></td><td>" + esc(r[1]) + "</td><td>" +
-          esc(r[2]) + "</td><td><code>" + esc(r[3]) + "</code></td></tr>";
+          "<td class='mn'>" + safeHtml(r[3]) + "</td></tr>";
       }).join("");
     }
 
@@ -98,43 +78,6 @@
       return "<li>" + safeHtml(li) + "</li>";
     }).join("");
 
-    /* 权限表 + 建议 */
-    var pb = document.getElementById("permBody");
-    if (pb) {
-      pb.innerHTML = D.perms.map(function (r) {
-        return "<tr><td><code>" + esc(r[0]) + "</code></td><td>" + esc(r[1]) +
-          "</td><td class='def-" + r[3] + "'>" + esc(r[2]) + "</td></tr>";
-      }).join("");
-    }
-    var tips = document.getElementById("permTips");
-    if (tips) {
-      tips.innerHTML = "<div class='perm-tips-title'>" + esc(s["perm.tipsTitle"] || "建议") + "</div>" +
-        "<ul>" + D.permTips.map(function (li) {
-          return "<li>" + safeHtml(li) + "</li>";
-        }).join("") + "</ul>";
-    }
-
-    /* 配置参考 */
-    var cd = document.getElementById("configDocs");
-    if (cd) {
-      cd.innerHTML = D.configSections.map(function (sec) {
-        var rows = sec.rows.map(function (r) {
-          return "<tr><td><code>" + safeHtml(r[0]) + "</code></td><td class='cfg-default'>" +
-            safeHtml(r[1]) + "</td><td>" + safeHtml(r[2]) + "</td></tr>";
-        }).join("");
-        return "<div class='cfg-block'><h3>" + safeHtml(sec.title) + "</h3>" +
-          "<table class='cfg-table'><thead><tr><th>" + esc(s["cfg.key"] || "键") + "</th>" +
-          "<th>" + esc(s["cfg.def"] || "默认") + "</th><th>" + esc(s["cfg.note"] || "说明") +
-          "</th></tr></thead><tbody>" + rows + "</tbody></table></div>";
-      }).join("");
-    }
-
-    /* i18n 三层合并 */
-    var ml = document.getElementById("i18nMergeList");
-    if (ml) ml.innerHTML = D.i18nMerge.map(function (li) {
-      return "<li>" + safeHtml(li) + "</li>";
-    }).join("");
-
     /* 设计原则 */
     var pg = document.getElementById("principleGrid");
     if (pg) {
@@ -150,7 +93,7 @@
     /* FAQ */
     var fl = document.getElementById("faqList");
     if (fl) {
-      fl.innerHTML = D.faqs.map(function (f, i) {
+      fl.innerHTML = D.faqs.map(function (f) {
         return "<details class='faq-item'><summary>" + safeHtml(f.q) + "</summary>" +
           "<div class='faq-a'>" + safeHtml(f.a) + "</div></details>";
       }).join("");
@@ -176,8 +119,10 @@
     }
 
     /* 语言按钮态 */
-    document.getElementById("langZh").classList.toggle("active", lang === "zh");
-    document.getElementById("langEn").classList.toggle("active", lang === "en");
+    var langZh = document.getElementById("langZh");
+    var langEn = document.getElementById("langEn");
+    if (langZh) langZh.classList.toggle("active", lang === "zh");
+    if (langEn) langEn.classList.toggle("active", lang === "en");
     var mZh = document.getElementById("langZhMobile");
     var mEn = document.getElementById("langEnMobile");
     if (mZh) mZh.classList.toggle("active", lang === "zh");

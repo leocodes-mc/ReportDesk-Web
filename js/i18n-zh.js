@@ -17,7 +17,7 @@ window.I18N_ZH = {
     "hero.title": "把\u201c玩家举报 → 管理员受理 → 结案归档\u201d<br>做成一条完整的产品流程",
     "hero.sub": "面向 Minecraft 服务器的<strong>玩家举报工作台</strong>：图形化提交、管理受理工作流、异步持久化、审计日志，以及可整体开关的证据采集增强层。",
     "hero.download": "下载 1.0.0 jar",
-    "hero.start": "开始使用",
+    "hero.start": "完整文档",
     "stat.tests": "单元测试全绿",
     "stat.io": "主线程文件 IO",
     "stat.cats": "内置分类",
@@ -122,7 +122,8 @@ window.I18N_ZH = {
     "inst.meta.licenseV": "GPL-3.0-or-later",
     "inst.meta.reload": "热加载",
     "inst.meta.reloadV": "/reports reload（除 storage.directory 外）",
-    "inst.docslink": "打开完整 Wiki 文档 →",
+    "inst.docslink": "完整 Wiki 文档 →",
+    "inst.dl": "立即下载 →",
     "footer.docs": "完整 Wiki 文档",
   },
   /* 表格数据 */

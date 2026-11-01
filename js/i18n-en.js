@@ -17,7 +17,7 @@ window.I18N_EN = {
     "hero.title": "From \u201cplayer reports an issue\u201d to \u201cadmins close the case\u201d<br>— one complete product flow",
     "hero.sub": "A <strong>player-report workbench</strong> for Minecraft servers: GUI submission, admin intake workflow, async persistence, audit log, and a fully switchable evidence-capture enhancement layer.",
     "hero.download": "Download 1.0.0 jar",
-    "hero.start": "Get started",
+    "hero.start": "Full docs",
     "stat.tests": "unit tests passing",
     "stat.io": "main-thread file IO",
     "stat.cats": "built-in categories",
@@ -122,7 +122,8 @@ window.I18N_EN = {
     "inst.meta.licenseV": "GPL-3.0-or-later",
     "inst.meta.reload": "Hot reload",
     "inst.meta.reloadV": "/reports reload (except storage.directory)",
-    "inst.docslink": "Open the full Wiki docs →",
+    "inst.docslink": "Full Wiki docs →",
+    "inst.dl": "Download now →",
     "footer.docs": "Full Wiki docs",
   },
   features: [
