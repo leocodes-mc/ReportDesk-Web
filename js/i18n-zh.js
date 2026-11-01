@@ -14,7 +14,7 @@ window.I18N_ZH = {
     "nav.roadmap": "路线图",
     "nav.install": "安装",
     "nav.download": "下载 1.0.0",
-    "hero.title": "把\u201c玩家举报 → 管理员受理 → 结案归档\u201d<br>做成一条完整的产品流程",
+    "hero.title": "ReportDesk | 新一代 Minecraft 举报插件",
     "hero.sub": "面向 Minecraft 服务器的<strong>玩家举报工作台</strong>：图形化提交、管理受理工作流、异步持久化、审计日志，以及可整体开关的证据采集增强层。",
     "hero.download": "下载 1.0.0 jar",
     "hero.start": "完整文档",

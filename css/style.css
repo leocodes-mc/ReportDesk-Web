@@ -142,6 +142,7 @@ a:hover{color:var(--accent-2);text-decoration:underline;text-underline-offset:3p
   font-size:clamp(30px,4.6vw,52px);line-height:1.18;font-weight:800;
   letter-spacing:-.5px;margin-bottom:20px;color:var(--text);
 }
+.hero h1 .hero-pipe{color:var(--accent-2);font-weight:300;margin:0 8px}
 .hero-sub{max-width:680px;margin:0 auto 34px;color:var(--muted);font-size:18px}
 .hero-sub strong{color:var(--text)}
 .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}

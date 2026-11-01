@@ -14,7 +14,7 @@ window.I18N_EN = {
     "nav.roadmap": "Roadmap",
     "nav.install": "Install",
     "nav.download": "Download 1.0.0",
-    "hero.title": "From \u201cplayer reports an issue\u201d to \u201cadmins close the case\u201d<br>— one complete product flow",
+    "hero.title": "ReportDesk | New-generation Minecraft reporting plugin",
     "hero.sub": "A <strong>player-report workbench</strong> for Minecraft servers: GUI submission, admin intake workflow, async persistence, audit log, and a fully switchable evidence-capture enhancement layer.",
     "hero.download": "Download 1.0.0 jar",
     "hero.start": "Full docs",
