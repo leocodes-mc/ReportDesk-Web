@@ -31,7 +31,8 @@
     if (toTop) toTop.classList.toggle("show", y > 600);
     if (progress) {
       var h = document.documentElement.scrollHeight - window.innerHeight;
-      progress.style.width = (h > 0 ? (y / h) * 100 : 0) + "%";
+      var p = h > 0 ? y / h : 0;
+      progress.style.transform = "scaleX(" + p + ")";
     }
     ticking = false;
   }
