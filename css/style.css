@@ -469,6 +469,11 @@ a:hover{text-decoration:underline}
 .faq-a code{font-size:12px}
 
 /* ---------- RESPONSIVE ---------- */
+/* 移动菜单展开时显示语言切换（须放在 media 之前，桌面默认隐藏） */
+.nav-mobile-extra{display:none;padding:12px;border-top:1px solid var(--border)}
+.links.open .nav-mobile-extra{display:flex}
+.nav-mobile-extra .lang-switch{align-self:flex-start}
+
 @media(max-width:960px){
   .links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg-2);
     flex-direction:column;padding:12px;border-bottom:1px solid var(--border);z-index:90}
@@ -485,10 +490,6 @@ a:hover{text-decoration:underline}
   .hero-stats{gap:22px}
   .hero-stats b{font-size:24px}
 }
-/* 移动菜单展开时显示语言切换 */
-.links.open .nav-mobile-extra{display:flex}
-.nav-mobile-extra{display:none;padding:12px;border-top:1px solid var(--border)}
-.nav-mobile-extra .lang-switch{align-self:flex-start}
 
 /* ---------- 无障碍：偏好减少动画 ---------- */
 @media(prefers-reduced-motion:reduce){
