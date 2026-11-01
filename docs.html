@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ReportDesk 完整 Wiki：安装、命令、权限、配置、增强层、多语言、架构与开发指南。">
     <title>ReportDesk 文档 - 完整使用与开发 Wiki</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233b82f6'/%3E%3Ctext x='32' y='44' font-family='Arial' font-size='38' font-weight='800' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
     <style>
         /* ================= 高级 CSS 变量配置 ================= */
         :root {
@@ -348,25 +349,72 @@
             color: var(--text-muted); font-weight: 500;
             display: block; padding: 7px 10px;
             border-radius: var(--radius-md);
-            transition: color 0.2s var(--ease-smooth), background 0.25s var(--ease-smooth);
+            transition: color 0.2s var(--ease-smooth), background 0.25s var(--ease-smooth),
+                        padding 0.25s var(--ease-smooth);
             position: relative;
             cursor: pointer; /* 明示可点击 */
             user-select: none;
         }
-        /* 目录项悬浮 */
+        /* 目录项悬浮：右侧弹性缩进 */
         .toc-list a:hover {
             color: var(--text-title);
             background: var(--hover-bg);
             text-decoration: none;
+            padding-left: 14px;
         }
-        /* ScrollSpy 激活状态 */
+        /* ScrollSpy 激活状态：指示条弹性滑入 */
         .toc-list a.active {
             color: var(--primary); font-weight: 600; background: var(--primary-light);
         }
         .toc-list a.active::before {
-            content: ''; position: absolute; left: -8px; top: 50%; transform: translateY(-50%);
+            content: ''; position: absolute; left: -8px; top: 50%;
+            transform: translateY(-50%) scaleX(0); transform-origin: center;
             width: 3px; height: 14px; background: var(--primary); border-radius: 2px;
+            transition: transform 0.3s var(--ease-out-back);
         }
+        .toc-list a.active::before { transform: translateY(-50%) scaleX(1); }
+
+        /* 侧栏底部：返回首页浮动按钮 */
+        .sidebar-back {
+            margin-top: 8px;
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            color: var(--text-muted); font-size: 13px; font-weight: 600;
+            box-shadow: var(--shadow-sm);
+            transition: color 0.2s var(--ease-smooth), border-color 0.25s var(--ease-smooth),
+                        transform 0.25s var(--ease-out-back), box-shadow 0.25s var(--ease-smooth);
+        }
+        .sidebar-back:hover {
+            color: var(--primary); text-decoration: none;
+            border-color: rgba(59,130,246,0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59,130,246,0.12);
+        }
+        .sidebar-back .ic-arrow { border-color: currentColor; }
+
+        /* 侧栏底部：返回首页浮动按钮 */
+        .sidebar-back {
+            margin-top: 8px;
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            color: var(--text-muted); font-size: 13px; font-weight: 600;
+            box-shadow: var(--shadow-sm);
+            transition: color 0.2s var(--ease-smooth), border-color 0.25s var(--ease-smooth),
+                        transform 0.25s var(--ease-out-back), box-shadow 0.25s var(--ease-smooth);
+        }
+        .sidebar-back:hover {
+            color: var(--primary); text-decoration: none;
+            border-color: rgba(59,130,246,0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59,130,246,0.12);
+        }
+        .sidebar-back .ic-arrow { border-color: currentColor; }
 
         /* ================= 页脚 ================= */
         .docs-footer {
@@ -436,6 +484,9 @@
             <div class="sidebar-groups" id="sidebar-groups">
                 <!-- JS 动态生成 -->
             </div>
+            <a class="sidebar-back" href="index.html" title="回到首页">
+                <span class="ic-arrow"></span><span>首页</span>
+            </a>
         </aside>
 
         <!-- 中间内容区 (卡片样式) -->
@@ -608,6 +659,13 @@
                 });
             }
 
+            /* ---------- 7b. 侧栏"首页"按钮 ---------- */
+            const backBtn = document.querySelector('.sidebar-back');
+            if (backBtn) backBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = 'index.html';
+            });
+
             /* ---------- 7. 侧栏菜单点击 ---------- */
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -637,6 +695,22 @@
                 if (!ticking) { ticking = true; requestAnimationFrame(updateProgress); }
             }, { passive: true });
             window.addEventListener('resize', updateProgress, { passive: true });
+
+            /* ---------- 9b. 键盘 ← / → 切页（聚焦内容区时） ---------- */
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey || e.metaKey || e.altKey) return;
+                if (e.target.matches('input, textarea')) return;
+                const ids = pages.map(p => 'page-' + p.id);
+                const cur = ids.indexOf(currentPanelId);
+                if (cur === -1) return;
+                if (e.key === 'ArrowLeft' && cur > 0) {
+                    e.preventDefault();
+                    switchPage(ids[cur - 1]);
+                } else if (e.key === 'ArrowRight' && cur < ids.length - 1) {
+                    e.preventDefault();
+                    switchPage(ids[cur + 1]);
+                }
+            });
 
             /* ---------- 初始化首页 ---------- */
             switchPage('page-' + menu[0].id, true);
