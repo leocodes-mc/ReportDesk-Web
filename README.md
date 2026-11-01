@@ -17,12 +17,19 @@ ReportDesk-Web/
 
 | 平台 | 地址 |
 |---|---|
+| 本站（GitHub Pages） | https://leocodes-mc.github.io/ReportDesk-Web/ |
 | GitHub 仓库 | https://github.com/leocodes-mc/ReportDesk |
 | Hangar 分发页 | https://hangar.papermc.io/William/ReportDesk |
 | Modrinth 分发页 | https://modrinth.com/plugin/reportdesk |
 | 1.0.0 发行版 | https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar |
 
-页面上的"下载 1.0.0 jar"按钮直连发行版地址；Hero 下方与页脚各有一组 GitHub / Hangar / Modrinth 链接。
+页面上的"下载 1.0.0 jar"按钮直连发行版地址；Hero 下方与"获取与源码"章节各有一组 GitHub / Hangar / Modrinth 链接。
+
+## 部署（GitHub Pages）
+
+1. 仓库 **Settings → Pages → Build and deployment**：Source 选 **Deploy from a branch**，Branch 选 **main / (root)**，Save；
+2. 1–5 分钟后访问 `https://leocodes-mc.github.io/ReportDesk-Web/`；
+3. 后续更新：改文件 → `git push` → GitHub 自动重新部署（几分钟内生效）。
 
 ## 使用
 
