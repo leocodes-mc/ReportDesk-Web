@@ -5,20 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title data-i18n="meta.title">ReportDesk — Minecraft 玩家举报工作台</title>
 <meta name="description" data-i18n-meta="meta.description" content="ReportDesk：面向 Paper 1.20–1.21.x 的完整玩家举报工作台。GUI 提交、管理受理工作流、异步持久化、审计日志、可整体开关的证据增强层。">
+<meta name="theme-color" content="#0a0e13">
 <link rel="icon" type="image/png" href="icon.png">
+<link rel="preconnect" href="https://github.com">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body id="top">
+
+<a class="skip-link" href="#features">跳到主要内容</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
   <div class="nav-inner">
     <a class="brand" href="#top">
       <img src="icon.png" alt="ReportDesk logo" width="34" height="34">
-      <span>ReportDesk</span>
+      <span class="brand-name">ReportDesk</span>
       <span class="brand-ver" data-i18n="brand.ver">v1.0.0</span>
     </a>
-    <nav class="links" id="navLinks">
+
+    <nav class="links" id="navLinks" aria-label="主导航">
       <a href="#features" data-i18n="nav.features">特性</a>
       <a href="#commands" data-i18n="nav.commands">命令</a>
       <a href="#enhancements" data-i18n="nav.enhancements">增强层</a>
@@ -28,46 +34,61 @@
       <a href="#architecture" data-i18n="nav.architecture">架构</a>
       <a href="#roadmap" data-i18n="nav.roadmap">路线图</a>
       <a href="#install" data-i18n="nav.install">安装</a>
+
       <div class="nav-mobile-extra" id="navMobileExtra">
         <div class="lang-switch" id="langSwitchMobile">
-          <button id="langZhMobile" class="lang-btn">中</button>
-          <button id="langEnMobile" class="lang-btn">EN</button>
+          <button id="langZhMobile" class="lang-btn active" type="button">中</button>
+          <button id="langEnMobile" class="lang-btn" type="button">EN</button>
         </div>
       </div>
     </nav>
+
     <div class="nav-actions">
       <div class="lang-switch" id="langSwitch" title="Language / 语言">
-        <button id="langZh" class="lang-btn active">中</button>
-        <button id="langEn" class="lang-btn">EN</button>
+        <button id="langZh" class="lang-btn active" type="button">中</button>
+        <button id="langEn" class="lang-btn" type="button">EN</button>
       </div>
-      <a class="btn primary nav-dl" href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar" target="_blank" rel="noopener" download>
+      <a class="btn primary nav-dl"
+         href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar"
+         target="_blank" rel="noopener" download>
         <span class="nav-dl-label" data-i18n="nav.download">下载 1.0.0</span>
       </a>
-      <button class="menu-toggle" id="menuToggle" aria-label="menu">☰</button>
+      <button class="menu-toggle" id="menuToggle" type="button"
+              aria-label="菜单" aria-expanded="false" aria-controls="navLinks">☰</button>
     </div>
   </div>
 </header>
 
 <!-- ============ HERO ============ -->
-<section class="hero" id="top">
-  <div class="wrap">
-    <div class="hero-badge">Paper 1.20 – 1.21.x · Java 17+ · GPL-3.0</div>
-    <h1 data-i18n="hero.title">把"玩家举报 → 管理员受理 → 结案归档"<br>做成一条完整的产品流程</h1>
+<section class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <div class="wrap hero-inner">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Paper 1.20 – 1.21.x · Java 17+ · GPL-3.0
+    </div>
+
+    <h1 data-i18n="hero.title">
+      把「玩家举报 → 管理员受理 → 结案归档」<br>做成一条完整的产品流程
+    </h1>
+
     <p class="hero-sub" data-i18n="hero.sub"></p>
+
     <div class="hero-cta">
-      <a class="btn primary" href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar" target="_blank" rel="noopener" download data-i18n="hero.download">下载 1.0.0 jar</a>
-      <a class="btn ghost" href="#install" data-i18n="hero.start">开始使用</a>
+      <a class="btn primary lg"
+         href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar"
+         target="_blank" rel="noopener" download data-i18n="hero.download">下载 1.0.0 jar</a>
+      <a class="btn ghost lg" href="#install" data-i18n="hero.start">开始使用</a>
     </div>
+
     <div class="hero-distros">
       <a class="distro" href="https://github.com/leocodes-mc/ReportDesk" target="_blank" rel="noopener">GitHub</a>
       <a class="distro" href="https://hangar.papermc.io/William/ReportDesk" target="_blank" rel="noopener">Hangar</a>
       <a class="distro" href="https://modrinth.com/plugin/reportdesk" target="_blank" rel="noopener">Modrinth</a>
     </div>
-    <div class="hero-distros">
-      <a class="distro" href="https://github.com/leocodes-mc/ReportDesk" target="_blank" rel="noopener">GitHub</a>
-      <a class="distro" href="https://hangar.papermc.io/William/ReportDesk" target="_blank" rel="noopener">Hangar</a>
-      <a class="distro" href="https://modrinth.com/plugin/reportdesk" target="_blank" rel="noopener">Modrinth</a>
-    </div>
+
     <div class="hero-stats">
       <div><b data-count="184">0</b><span data-i18n="stat.tests">单元测试全绿</span></div>
       <div><b>0</b><span data-i18n="stat.io">主线程文件 IO</span></div>
@@ -79,11 +100,13 @@
 
 <!-- ============ GROUP A · 产品 ============ -->
 <div class="group">
-  <div class="wrap"><div class="group-bar">
-    <span class="group-tag">A</span>
-    <b data-i18n="group.a">产品</b>
-    <i data-i18n="group.aSub">它是什么 · 解决什么</i>
-  </div></div>
+  <div class="wrap">
+    <div class="group-bar">
+      <span class="group-tag">A</span>
+      <b data-i18n="group.a">产品</b>
+      <i data-i18n="group.aSub">它是什么 · 解决什么</i>
+    </div>
+  </div>
 
   <!-- 01 FEATURES -->
   <section class="sec" id="features">
@@ -93,6 +116,7 @@
         <h2 data-i18n="sec.features">核心特性</h2>
         <p data-i18n="sec.featuresSub">基础功能开箱即用；证据增强层默认全关，需要时再开。</p>
       </div>
+
       <div class="grid feat">
         <div class="card"><div class="card-ico">▤</div><h3 data-i18n="feat.gui.t">举报 GUI</h3><p data-i18n="feat.gui.d"></p></div>
         <div class="card"><div class="card-ico">✎</div><h3 data-i18n="feat.workflow.t">管理受理工作流</h3><p data-i18n="feat.workflow.d"></p></div>
@@ -102,7 +126,7 @@
         <div class="card"><div class="card-ico">⇄</div><h3 data-i18n="feat.notify.t">对话与通知</h3><p data-i18n="feat.notify.d"></p></div>
       </div>
 
-      <!-- 功能矩阵（wiki 01） -->
+      <!-- 功能矩阵 -->
       <div class="matrix">
         <div class="matrix-title" data-i18n="matrix.title">功能矩阵</div>
         <div class="matrix-scroll">
@@ -123,11 +147,11 @@
         <div class="demo-title" data-i18n="demo.title">举报 GUI 流程</div>
         <div class="demo-steps">
           <div class="step active" data-step="1"><i>1</i><b data-i18n="demo.s1.t">选择玩家</b><small data-i18n="demo.s1.d">在线 / 离线目标列表</small></div>
-          <div class="step-arrow">→</div>
+          <div class="step-arrow" aria-hidden="true">→</div>
           <div class="step" data-step="2"><i>2</i><b data-i18n="demo.s2.t">选择分类</b><small data-i18n="demo.s2.d">7 个内置分类，语言跟随切换</small></div>
-          <div class="step-arrow">→</div>
+          <div class="step-arrow" aria-hidden="true">→</div>
           <div class="step" data-step="3"><i>3</i><b data-i18n="demo.s3.t">填写详情</b><small data-i18n="demo.s3.d">长度与非法字符自动校验</small></div>
-          <div class="step-arrow">→</div>
+          <div class="step-arrow" aria-hidden="true">→</div>
           <div class="step" data-step="4"><i>4</i><b data-i18n="demo.s4.t">确认提交</b><small data-i18n="demo.s4.d">入队异步落盘 + 通知</small></div>
         </div>
         <p class="demo-note" data-i18n="demo.note"></p>
@@ -146,37 +170,41 @@
         <h2 data-i18n="sec.commands">命令参考</h2>
         <p data-i18n="sec.commandsSub"></p>
       </div>
+
       <div class="cmd-cols">
         <div class="cmd-block">
           <h3><span data-i18n="cmd.player.title">玩家侧 · /report</span> <span class="tag">reportdesk.report</span></h3>
-          <table class="cmd-table" id="cmdPlayerTable"></table>
+          <div class="table-scroll"><table class="cmd-table" id="cmdPlayerTable"></table></div>
         </div>
         <div class="cmd-block">
           <h3><span data-i18n="cmd.staff.title">管理侧 · /reports</span> <span class="tag">reportdesk.admin</span></h3>
-          <table class="cmd-table" id="cmdStaffTable"></table>
+          <div class="table-scroll"><table class="cmd-table" id="cmdStaffTable"></table></div>
         </div>
       </div>
 
-      <!-- 裁决词表（wiki 03） -->
       <div class="verdict-block">
         <div class="verdict-title" data-i18n="verdict.title">结案裁决词（close）</div>
-        <table class="verdict-table">
-          <thead><tr>
-            <th data-i18n="verdict.en">英文</th>
-            <th data-i18n="verdict.zh">中文</th>
-            <th data-i18n="verdict.meaning">含义</th>
-            <th data-i18n="verdict.status">落库状态</th>
-          </tr></thead>
-          <tbody id="verdictBody"></tbody>
-        </table>
+        <div class="table-scroll">
+          <table class="verdict-table">
+            <thead><tr>
+              <th data-i18n="verdict.en">英文</th>
+              <th data-i18n="verdict.zh">中文</th>
+              <th data-i18n="verdict.meaning">含义</th>
+              <th data-i18n="verdict.status">落库状态</th>
+            </tr></thead>
+            <tbody id="verdictBody"></tbody>
+          </table>
+        </div>
       </div>
 
       <div class="example">
-        <div class="example-label" data-i18n="example.label">示例</div>
+        <div class="example-head">
+          <span class="example-label" data-i18n="example.label">示例</span>
+          <button class="copy-btn" data-copybtn data-i18n="example.copy" type="button">复制</button>
+        </div>
         <pre class="code"><code data-copy>/reports close 42 resolved 已核实飞行截图
 /reports watch Notch
 /reports config set limits.cooldown-seconds 120</code></pre>
-        <button class="copy-btn" data-copybtn data-i18n="example.copy">复制</button>
       </div>
     </div>
   </section>
@@ -189,6 +217,7 @@
         <h2 data-i18n="sec.enhancements">证据增强层</h2>
         <p data-i18n="sec.enhancementsSub"></p>
       </div>
+
       <div class="grid enh">
         <div class="card off"><span class="switch-pill" data-i18n="enh.pill">默认关</span><h3 data-i18n="enh.snap.t">现场快照</h3><p data-i18n="enh.snap.d"></p></div>
         <div class="card off"><span class="switch-pill" data-i18n="enh.pill">默认关</span><h3 data-i18n="enh.break.t">方块破坏采样</h3><p data-i18n="enh.break.d"></p></div>
@@ -196,7 +225,7 @@
         <div class="card off"><span class="switch-pill" data-i18n="enh.pill">默认关</span><h3 data-i18n="ench.auto.t">自动检测</h3><p data-i18n="ench.auto.d"></p></div>
         <div class="card off"><span class="switch-pill" data-i18n="enh.pill">默认关</span><h3 data-i18n="enh.punish.t">联动处罚</h3><p data-i18n="enh.punish.d"></p></div>
       </div>
-      <!-- 渐进启用建议（wiki 06） -->
+
       <div class="enh-guide">
         <div class="enh-guide-title" data-i18n="enhguide.title">建议的渐进启用顺序</div>
         <ol id="enhGuideList"></ol>
@@ -207,11 +236,13 @@
 
 <!-- ============ GROUP B · 使用 ============ -->
 <div class="group">
-  <div class="wrap"><div class="group-bar">
-    <span class="group-tag">B</span>
-    <b data-i18n="group.b">使用</b>
-    <i data-i18n="group.bSub">授权 · 调参 · 本地化 · 常见问题</i>
-  </div></div>
+  <div class="wrap">
+    <div class="group-bar">
+      <span class="group-tag">B</span>
+      <b data-i18n="group.b">使用</b>
+      <i data-i18n="group.bSub">授权 · 调参 · 本地化 · 常见问题</i>
+    </div>
+  </div>
 
   <!-- 04 PERMISSIONS -->
   <section class="sec" id="permissions">
@@ -221,10 +252,17 @@
         <h2 data-i18n="sec.permissions">权限节点</h2>
         <p data-i18n="sec.permissionsSub"></p>
       </div>
-      <table class="perm-table">
-        <thead><tr><th data-i18n="perm.node">节点</th><th data-i18n="perm.desc">说明</th><th data-i18n="perm.def">默认</th></tr></thead>
-        <tbody id="permBody"></tbody>
-      </table>
+
+      <div class="table-scroll">
+        <table class="perm-table">
+          <thead><tr>
+            <th data-i18n="perm.node">节点</th>
+            <th data-i18n="perm.desc">说明</th>
+            <th data-i18n="perm.def">默认</th>
+          </tr></thead>
+          <tbody id="permBody"></tbody>
+        </table>
+      </div>
       <div class="perm-tips" id="permTips"></div>
     </div>
   </section>
@@ -249,6 +287,7 @@
         <h2 data-i18n="sec.i18n">多语言</h2>
         <p data-i18n="sec.i18nSub"></p>
       </div>
+
       <div class="i18n-cols">
         <div class="i18n-block">
           <h3 data-i18n="i18n.merge.t">三层合并</h3>
@@ -266,13 +305,13 @@
     </div>
   </section>
 
-  <!-- 06.5 FAQ -->
+  <!-- 06+ FAQ -->
   <section class="sec" id="faq">
     <div class="wrap">
       <div class="sec-head">
         <span class="sec-no">06+</span>
         <h2 data-i18n="sec.faq">常见问题</h2>
-        <p data-i18n="sec.faqSub">来自安装文档 FAQ，覆盖绝大多数"卡住"的场景。</p>
+        <p data-i18n="sec.faqSub">来自安装文档 FAQ，覆盖绝大多数“卡住”的场景。</p>
       </div>
       <div class="faq" id="faqList"></div>
     </div>
@@ -281,11 +320,13 @@
 
 <!-- ============ GROUP C · 技术 ============ -->
 <div class="group">
-  <div class="wrap"><div class="group-bar">
-    <span class="group-tag">C</span>
-    <b data-i18n="group.c">技术</b>
-    <i data-i18n="group.cSub">内部怎么跑 · 接下来做什么</i>
-  </div></div>
+  <div class="wrap">
+    <div class="group-bar">
+      <span class="group-tag">C</span>
+      <b data-i18n="group.c">技术</b>
+      <i data-i18n="group.cSub">内部怎么跑 · 接下来做什么</i>
+    </div>
+  </div>
 
   <!-- 07 ARCHITECTURE -->
   <section class="sec" id="architecture">
@@ -295,10 +336,11 @@
         <h2 data-i18n="sec.arch">架构</h2>
         <p data-i18n="sec.archSub"></p>
       </div>
+
       <div class="arch-cols">
         <div class="arch-block">
           <h3 data-i18n="arch.thread">线程模型</h3>
-          <table class="mini-table" id="threadTable"></table>
+          <div class="table-scroll"><table class="mini-table" id="threadTable"></table></div>
         </div>
         <div class="arch-block">
           <h3 data-i18n="arch.storage">存储格式</h3>
@@ -336,11 +378,13 @@ i18n/      Messages + 900+ key 常量</code></pre>
 
 <!-- ============ GROUP D · 资源 ============ -->
 <div class="group">
-  <div class="wrap"><div class="group-bar">
-    <span class="group-tag">D</span>
-    <b data-i18n="group.d">资源</b>
-    <i data-i18n="group.dSub">上手 · 源码 · 下载</i>
-  </div></div>
+  <div class="wrap">
+    <div class="group-bar">
+      <span class="group-tag">D</span>
+      <b data-i18n="group.d">资源</b>
+      <i data-i18n="group.dSub">上手 · 源码 · 下载</i>
+    </div>
+  </div>
 
   <!-- 09 INSTALL -->
   <section class="sec" id="install">
@@ -350,12 +394,13 @@ i18n/      Messages + 900+ key 常量</code></pre>
         <h2 data-i18n="sec.install">安装</h2>
         <p data-i18n="sec.installSub"></p>
       </div>
+
       <div class="install-grid">
         <div class="card"><span class="step-no">1</span><h3 data-i18n="inst.s1.t">放入插件</h3><p data-i18n="inst.s1.d"></p></div>
         <div class="card"><span class="step-no">2</span><h3 data-i18n="inst.s2.t">启动</h3><p data-i18n="inst.s2.d"></p></div>
         <div class="card"><span class="step-no">3</span><h3 data-i18n="inst.s3.t">开始使用</h3><p data-i18n="inst.s3.d"></p></div>
       </div>
-      <!-- 目录结构（wiki 02） -->
+
       <div class="arch-block install-dir">
         <h3 data-i18n="inst.dir">生成目录结构</h3>
         <pre class="code small"><code>plugins/ReportDesk/
@@ -371,6 +416,7 @@ i18n/      Messages + 900+ key 常量</code></pre>
     ├── audit/                 审计日志（按天分文件）
     └── pending-notices.json   离线举报人待补发通知</code></pre>
       </div>
+
       <div class="install-meta">
         <div><b data-i18n="inst.meta.server">服务端</b><span data-i18n="inst.meta.serverV"></span></div>
         <div><b data-i18n="inst.meta.jdk">JDK</b><span data-i18n="inst.meta.jdkV"></span></div>
@@ -388,6 +434,7 @@ i18n/      Messages + 900+ key 常量</code></pre>
         <h2 data-i18n="sec.repos">获取与源码</h2>
         <p data-i18n="sec.reposSub"></p>
       </div>
+
       <div class="repo-grid">
         <a class="repo" href="https://github.com/leocodes-mc/ReportDesk" target="_blank" rel="noopener">
           <span class="repo-mark">⎇</span>
@@ -404,7 +451,9 @@ i18n/      Messages + 900+ key 常量</code></pre>
           <span class="repo-txt"><b>Modrinth</b><i>plugin / reportdesk</i></span>
           <span class="repo-go">→</span>
         </a>
-        <a class="repo repo-dl" href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar" target="_blank" rel="noopener">
+        <a class="repo repo-dl"
+           href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar"
+           target="_blank" rel="noopener">
           <span class="repo-mark">↓</span>
           <span class="repo-txt"><b data-i18n="repo.release">发行版</b><i>ReportDesk-1.0.0.jar</i></span>
           <span class="repo-go">→</span>
@@ -433,9 +482,8 @@ i18n/      Messages + 900+ key 常量</code></pre>
   <div class="wrap footer-note" data-i18n="footer.note"></div>
 </footer>
 
-<div class="toast" id="toast">已复制</div>
-<div class="progress" id="progress"></div>
-<button class="totop" id="toTop" aria-label="top">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
+<button class="totop" id="toTop" type="button" aria-label="回到顶部">↑</button>
 
 <script src="js/i18n-zh.js"></script>
 <script src="js/i18n-en.js"></script>

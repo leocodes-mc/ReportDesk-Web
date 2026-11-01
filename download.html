@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>下载 ReportDesk 1.0.0 — Minecraft 玩家举报工作台</title>
+<meta name="description" content="下载 ReportDesk v1.0.0：面向 Paper 1.20–1.21.x 的玩家举报工作台。提供 GitHub / Hangar / Modrinth 下载渠道、系统要求、安装步骤与 SHA-256 校验信息。">
+<meta name="theme-color" content="#0a0e13">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="preconnect" href="https://github.com">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ===== 下载页专属样式 ===== */
+.dl-page{
+  --dl-bg:#0a0e13;
+  --dl-panel:#111820;
+  --dl-card:#141c26;
+  --dl-line:rgba(255,255,255,.09);
+  --dl-txt:#e6edf5;
+  --dl-muted:#8b9bad;
+  --dl-accent:#4ade80;
+  --dl-accent2:#38bdf8;
+  --dl-radius:16px;
+}
+.dl-page{background:var(--dl-bg);color:var(--dl-txt);}
+.dl-page .wrap{max-width:1120px;margin:0 auto;padding:0 20px;}
+
+/* 导航简化 */
+.dl-page .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+  background:rgba(10,14,19,.78);border-bottom:1px solid var(--dl-line);}
+.dl-page .nav-inner{max-width:1120px;margin:0 auto;padding:0 20px;height:62px;
+  display:flex;align-items:center;gap:18px;}
+.dl-page .brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--dl-txt);font-weight:700;}
+.dl-page .brand img{border-radius:8px;}
+.dl-page .brand-ver{font-size:11px;color:var(--dl-muted);border:1px solid var(--dl-line);
+  padding:2px 7px;border-radius:999px;font-weight:500;}
+.dl-page .nav-back{margin-left:auto;font-size:13.5px;color:var(--dl-muted);
+  text-decoration:none;padding:7px 12px;border-radius:8px;transition:.18s;}
+.dl-page .nav-back:hover{color:var(--dl-txt);background:rgba(255,255,255,.05);}
+.dl-page .nav-dl{margin-left:8px;}
+
+/* Hero */
+.dl-hero{position:relative;padding:64px 0 44px;overflow:hidden;}
+.dl-hero::before{content:"";position:absolute;inset:-30% 30% auto -20%;height:520px;
+  background:radial-gradient(circle at 35% 40%,rgba(74,222,128,.16),transparent 62%),
+             radial-gradient(circle at 75% 25%,rgba(56,189,248,.13),transparent 60%);
+  pointer-events:none;}
+.dl-hero .wrap{position:relative;}
+.dl-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;
+  letter-spacing:.04em;color:var(--dl-accent);background:rgba(74,222,128,.09);
+  border:1px solid rgba(74,222,128,.25);padding:5px 12px;border-radius:999px;margin-bottom:20px;}
+.dl-eyebrow .pulse{width:7px;height:7px;border-radius:50%;background:var(--dl-accent);
+  box-shadow:0 0 0 0 rgba(74,222,128,.55);animation:dlPulse 2.2s infinite;}
+@keyframes dlPulse{70%{box-shadow:0 0 0 9px rgba(74,222,128,0);}100%{box-shadow:0 0 0 0 rgba(74,222,128,0);}}
+
+.dl-title{font-size:clamp(30px,4.6vw,46px);line-height:1.14;margin:0 0 14px;letter-spacing:-.02em;}
+.dl-title span{background:linear-gradient(92deg,var(--dl-accent),var(--dl-accent2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.dl-sub{font-size:16px;line-height:1.7;color:var(--dl-muted);max-width:620px;margin:0 0 30px;}
+
+.dl-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:34px;}
+.dl-btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:12px;
+  font-size:14.5px;font-weight:600;text-decoration:none;border:1px solid transparent;
+  transition:transform .16s,box-shadow .2s,background .18s,border-color .18s;cursor:pointer;}
+.dl-btn.primary{background:linear-gradient(180deg,#5eea90,#34c96a);color:#052012;
+  box-shadow:0 8px 22px -8px rgba(74,222,128,.55);}
+.dl-btn.primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px rgba(74,222,128,.6);}
+.dl-btn.ghost{background:rgba(255,255,255,.04);color:var(--dl-txt);border-color:var(--dl-line);}
+.dl-btn.ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);transform:translateY(-2px);}
+.dl-btn .sz{font-size:12px;opacity:.75;font-weight:500;}
+
+/* 文件元信息 */
+.dl-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1px;background:var(--dl-line);border:1px solid var(--dl-line);
+  border-radius:var(--dl-radius);overflow:hidden;}
+.dl-meta div{background:var(--dl-card);padding:15px 18px;}
+.dl-meta dt{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--dl-muted);margin-bottom:5px;}
+.dl-meta dd{margin:0;font-size:13.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  color:var(--dl-txt);word-break:break-all;}
+
+/* 章节 */
+.dl-sec{padding:52px 0;border-top:1px solid var(--dl-line);}
+.dl-sec-head{margin-bottom:26px;}
+.dl-sec-head h2{font-size:23px;margin:0 0 8px;letter-spacing:-.01em;}
+.dl-sec-head p{margin:0;color:var(--dl-muted);font-size:14.5px;line-height:1.65;max-width:640px;}
+
+/* 渠道卡片 */
+.dl-channels{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
+.dl-channel{display:flex;align-items:center;gap:14px;padding:18px;border-radius:14px;
+  background:var(--dl-card);border:1px solid var(--dl-line);text-decoration:none;
+  color:var(--dl-txt);transition:.18s;}
+.dl-channel:hover{border-color:rgba(74,222,128,.45);background:#16202b;transform:translateY(-2px);}
+.dl-channel .mark{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;
+  border-radius:11px;background:rgba(255,255,255,.05);font-size:19px;color:var(--dl-accent2);}
+.dl-channel .txt{min-width:0;}
+.dl-channel .txt b{display:block;font-size:14.5px;margin-bottom:3px;}
+.dl-channel .txt i{font-style:normal;font-size:12.5px;color:var(--dl-muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
+.dl-channel .arrow{margin-left:auto;color:var(--dl-muted);transition:.18s;}
+.dl-channel:hover .arrow{color:var(--dl-accent);transform:translateX(3px);}
+
+/* 要求表格 */
+.dl-table-wrap{border:1px solid var(--dl-line);border-radius:14px;overflow:hidden;overflow-x:auto;}
+.dl-table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px;}
+.dl-table th,.dl-table td{text-align:left;padding:13px 18px;border-bottom:1px solid var(--dl-line);}
+.dl-table th{background:rgba(255,255,255,.03);font-size:12px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--dl-muted);font-weight:600;}
+.dl-table tr:last-child td{border-bottom:none;}
+.dl-table td:first-child{color:var(--dl-muted);width:32%;}
+.dl-table code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:5px;
+  font-size:12.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+
+/* 安装步骤 */
+.dl-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:26px;}
+.dl-step{position:relative;padding:22px 20px;border-radius:14px;background:var(--dl-card);
+  border:1px solid var(--dl-line);}
+.dl-step .no{position:absolute;top:16px;right:18px;font-size:34px;font-weight:800;
+  color:rgba(255,255,255,.05);line-height:1;}
+.dl-step h3{font-size:15px;margin:0 0 8px;}
+.dl-step p{margin:0;font-size:13.5px;line-height:1.65;color:var(--dl-muted);}
+
+/* 代码块 */
+.dl-code{position:relative;border:1px solid var(--dl-line);border-radius:14px;
+  background:#0d141b;overflow:hidden;}
+.dl-code-head{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;border-bottom:1px solid var(--dl-line);background:rgba(255,255,255,.025);}
+.dl-code-head span{font-size:12px;color:var(--dl-muted);letter-spacing:.04em;}
+.dl-copy{background:rgba(255,255,255,.06);border:1px solid var(--dl-line);color:var(--dl-txt);
+  font-size:12px;padding:5px 12px;border-radius:7px;cursor:pointer;transition:.16s;}
+.dl-copy:hover{background:rgba(74,222,128,.15);border-color:rgba(74,222,128,.4);color:var(--dl-accent);}
+.dl-code pre{margin:0;padding:16px 18px;overflow-x:auto;font-size:13px;line-height:1.75;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#c8d5e3;}
+
+/* 版本历史 */
+.dl-versions{border:1px solid var(--dl-line);border-radius:14px;overflow:hidden;overflow-x:auto;}
+.dl-versions table{width:100%;border-collapse:collapse;font-size:14px;min-width:620px;}
+.dl-versions th,.dl-versions td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--dl-line);}
+.dl-versions th{background:rgba(255,255,255,.03);font-size:12px;color:var(--dl-muted);
+  text-transform:uppercase;letter-spacing:.05em;font-weight:600;}
+.dl-versions tr:last-child td{border-bottom:none;}
+.dl-versions td:first-child{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:600;}
+.dl-versions .badge{display:inline-block;font-size:11px;padding:2px 9px;border-radius:999px;
+  border:1px solid rgba(74,222,128,.35);color:var(--dl-accent);background:rgba(74,222,128,.1);}
+.dl-versions .badge.old{border-color:var(--dl-line);color:var(--dl-muted);background:transparent;}
+.dl-versions a{color:var(--dl-accent2);text-decoration:none;font-size:13px;}
+.dl-versions a:hover{text-decoration:underline;}
+
+/* 校验块 */
+.dl-verify{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start;}
+.dl-note{padding:18px 20px;border-radius:14px;border:1px solid var(--dl-line);
+  background:rgba(56,189,248,.05);font-size:13.5px;line-height:1.7;color:var(--dl-muted);}
+.dl-note b{color:var(--dl-txt);}
+.dl-note code{background:rgba(255,255,255,.07);padding:1px 6px;border-radius:5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:#c8d5e3;}
+
+/* FAQ */
+.dl-faq{border:1px solid var(--dl-line);border-radius:14px;overflow:hidden;}
+.dl-faq details{border-bottom:1px solid var(--dl-line);}
+.dl-faq details:last-child{border-bottom:none;}
+.dl-faq summary{list-style:none;cursor:pointer;padding:17px 20px;font-size:14.5px;
+  font-weight:600;display:flex;align-items:center;gap:12px;transition:.16s;}
+.dl-faq summary::-webkit-details-marker{display:none;}
+.dl-faq summary::after{content:"+";margin-left:auto;color:var(--dl-muted);font-size:18px;
+  font-weight:400;transition:.2s;}
+.dl-faq details[open] summary::after{transform:rotate(45deg);color:var(--dl-accent);}
+.dl-faq summary:hover{background:rgba(255,255,255,.03);}
+.dl-faq p{margin:0;padding:0 20px 18px;font-size:14px;line-height:1.75;color:var(--dl-muted);}
+
+/* 页脚 */
+.dl-footer{border-top:1px solid var(--dl-line);padding:34px 0;margin-top:20px;}
+.dl-footer .wrap{display:flex;flex-wrap:wrap;gap:16px;align-items:center;
+  justify-content:space-between;font-size:13px;color:var(--dl-muted);}
+.dl-footer a{color:var(--dl-muted);text-decoration:none;margin-left:18px;transition:.16s;}
+.dl-footer a:hover{color:var(--dl-txt);}
+
+/* 复制提示 */
+.dl-page .toast{position:fixed;bottom:26px;left:50%;transform:translate(-50%,20px);
+  background:#1b2733;color:#e6edf5;border:1px solid rgba(74,222,128,.35);
+  padding:10px 20px;border-radius:10px;font-size:13px;opacity:0;pointer-events:none;
+  transition:.25s;z-index:99;}
+.dl-page .toast.show{opacity:1;transform:translate(-50%,0);}
+
+@media(max-width:820px){
+  .dl-verify{grid-template-columns:1fr;}
+  .dl-hero{padding:44px 0 36px;}
+}
+@media(max-width:600px){
+  .dl-page .nav-back{display:none;}
+  .dl-page .nav-dl{display:none;}
+  .dl-sec{padding:40px 0;}
+}
+</style>
+</head>
+<body class="dl-page" id="top">
+
+<a class="skip-link" href="#download">跳到下载按钮</a>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <img src="icon.png" alt="ReportDesk logo" width="30" height="30">
+      <span class="brand-name">ReportDesk</span>
+      <span class="brand-ver">v1.0.0</span>
+    </a>
+    <a class="nav-back" href="index.html">← 返回主页</a>
+    <a class="btn primary nav-dl"
+       href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar"
+       target="_blank" rel="noopener" download>
+      <span class="nav-dl-label">下载 1.0.0</span>
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ 下载 HERO ============ -->
+  <section class="dl-hero" id="download">
+    <div class="wrap">
+      <div class="dl-eyebrow">
+        <span class="pulse" aria-hidden="true"></span>
+        最新稳定版 · 2025-08-12 发布
+      </div>
+
+      <h1 class="dl-title">下载 <span>ReportDesk 1.0.0</span></h1>
+      <p class="dl-sub">
+        面向 Paper 1.20–1.21.x 的完整玩家举报工作台。GUI 提交、管理受理工作流、
+        异步持久化、审计日志，全部开箱即用；证据增强层默认关闭，按需启用。
+      </p>
+
+      <div class="dl-actions">
+        <a class="dl-btn primary"
+           href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar"
+           target="_blank" rel="noopener" download>
+          ↓ 下载 jar
+          <span class="sz">2.4 MB</span>
+        </a>
+        <a class="dl-btn ghost" href="#versions">查看历史版本</a>
+        <a class="dl-btn ghost" href="index.html#install">阅读安装文档</a>
+      </div>
+
+      <dl class="dl-meta">
+        <div><dt>文件名</dt><dd>ReportDesk-1.0.0.jar</dd></div>
+        <div><dt>大小</dt><dd>2.4 MB</dd></div>
+        <div><dt>支持版本</dt><dd>Paper 1.20 – 1.21.x</dd></div>
+        <div><dt>许可</dt><dd>GPL-3.0</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ 下载渠道 ============ -->
+  <section class="dl-sec">
+    <div class="wrap">
+      <div class="dl-sec-head">
+        <h2>选择下载渠道</h2>
+        <p>四个渠道提供完全相同的构建产物，选择你习惯的平台即可。</p>
+      </div>
+
+      <div class="dl-channels">
+        <a class="dl-channel" href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar"
+           target="_blank" rel="noopener">
+          <span class="mark" aria-hidden="true">↓</span>
+          <span class="txt"><b>GitHub Releases</b><i>官方直链 · 附校验和</i></span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="dl-channel" href="https://hangar.papermc.io/William/ReportDesk"
+           target="_blank" rel="noopener">
+          <span class="mark" aria-hidden="true">▣</span>
+          <span class="txt"><b>Hangar</b><i>PaperMC 官方插件平台</i></span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="dl-channel" href="https://modrinth.com/plugin/reportdesk"
+           target="_blank" rel="noopener">
+          <span class="mark" aria-hidden="true">◆</span>
+          <span class="txt"><b>Modrinth</b><i>社区分发 · 版本追踪</i></span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="dl-channel" href="https://github.com/leocodes-mc/ReportDesk"
+           target="_blank" rel="noopener">
+          <span class="mark" aria-hidden="true">⎇</span>
+          <span class="txt"><b>源码仓库</b><i>leocodes-mc / ReportDesk</i></span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 系统要求 ============ -->
+  <section class="dl-sec">
+    <div class="wrap">
+      <div class="dl-sec-head">
+        <h2>系统要求</h2>
+        <p>安装前请确认服务端环境满足以下条件，否则插件将无法正常加载。</p>
+      </div>
+
+      <div class="dl-table-wrap">
+        <table class="dl-table">
+          <thead>
+            <tr><th>项目</th><th>要求</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>服务端</td><td>Paper <code>1.20</code> – <code>1.21.x</code>（Spigot 不保证兼容）</td></tr>
+            <tr><td>Java</td><td><code>17</code> 或更高版本</td></tr>
+            <tr><td>内存</td><td>建议服务端至少 <code>2 GB</code> 可用堆内存</td></tr>
+            <tr><td>磁盘</td><td>基础功能 &lt; 10 MB；启用证据增强层后按举报量增长</td></tr>
+            <tr><td>依赖</td><td>无强制前置插件；权限管理可选 LuckPerms</td></tr>
+            <tr><td>热加载</td><td>支持 <code>/reports reload</code>，无需重启服务端</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 安装步骤 ============ -->
+  <section class="dl-sec">
+    <div class="wrap">
+      <div class="dl-sec-head">
+        <h2>三步完成安装</h2>
+        <p>下载完成后按下面步骤操作，首次启动会自动生成配置与数据目录。</p>
+      </div>
+
+      <div class="dl-steps">
+        <div class="dl-step">
+          <span class="no" aria-hidden="true">1</span>
+          <h3>放入插件目录</h3>
+          <p>把 <code>ReportDesk-1.0.0.jar</code> 复制到服务端的 <code>plugins/</code> 文件夹。</p>
+        </div>
+        <div class="dl-step">
+          <span class="no" aria-hidden="true">2</span>
+          <h3>启动服务端</h3>
+          <p>启动或重启 Paper 服务端，控制台出现启用日志即表示加载成功。</p>
+        </div>
+        <div class="dl-step">
+          <span class="no" aria-hidden="true">3</span>
+          <h3>开始使用</h3>
+          <p>玩家输入 <code>/report</code> 提交举报，管理员用 <code>/reports</code> 受理。</p>
+        </div>
+      </div>
+
+      <div class="dl-code">
+        <div class="dl-code-head">
+          <span>生成目录结构</span>
+          <button class="dl-copy" data-copybtn type="button">复制</button>
+        </div>
+        <pre><code data-copy>plugins/ReportDesk/
+├── config.yml                 业务配置（语言、限流、分类、增强层…）
+├── lang/
+│   ├── zh_CN.yml              中文文案
+│   └── en_US.yml              英文文案
+└── data/
+    ├── reports.json           举报记录（权威数据）
+    ├── reports.log            WAL 追加日志
+    ├── reports.json.bak/      备份（最多 5 份）
+    ├── evidence/              证据快照（增强层启用后生成）
+    ├── audit/                 审计日志（按天分文件）
+    └── pending-notices.json   离线举报人待补发通知</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 历史版本 ============ -->
+  <section class="dl-sec" id="versions">
+    <div class="wrap">
+      <div class="dl-sec-head">
+        <h2>版本历史</h2>
+        <p>推荐始终使用最新稳定版；旧版本仅保留用于回滚或兼容性排查。</p>
+      </div>
+
+      <div class="dl-versions">
+        <table>
+          <thead>
+            <tr><th>版本</th><th>发布日期</th><th>状态</th><th>说明</th><th>下载</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1.0.0</td>
+              <td>2025-08-12</td>
+              <td><span class="badge">最新</span></td>
+              <td>首个稳定版：GUI 举报、受理工作流、审计日志、证据增强层</td>
+              <td><a href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar"
+                     target="_blank" rel="noopener">下载</a></td>
+            </tr>
+            <tr>
+              <td>0.9.2</td>
+              <td>2025-07-20</td>
+              <td><span class="badge old">旧版</span></td>
+              <td>发布候选：修复 WAL 回放边界问题</td>
+              <td><a href="https://github.com/leocodes-mc/ReportDesk/releases"
+                     target="_blank" rel="noopener">查看</a></td>
+            </tr>
+            <tr>
+              <td>0.9.0</td>
+              <td>2025-06-30</td>
+              <td><span class="badge old">旧版</span></td>
+              <td>首个公开测试版，引入多语言与分类配置</td>
+              <td><a href="https://github.com/leocodes-mc/ReportDesk/releases"
+                     target="_blank" rel="noopener">查看</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 校验 ============ -->
+  <section class="dl-sec">
+    <div class="wrap">
+      <div class="dl-sec-head">
+        <h2>校验下载文件</h2>
+        <p>下载后建议核对 SHA-256，确保文件完整且未被篡改。</p>
+      </div>
+
+      <div class="dl-verify">
+        <div class="dl-code">
+          <div class="dl-code-head">
+            <span>SHA-256 · ReportDesk-1.0.0.jar</span>
+            <button class="dl-copy" data-copybtn type="button">复制</button>
+          </div>
+          <pre><code data-copy>4f9c2a7e1b83d650c5e0a2f7d94b8c316e7a2d5f0b9c4e8a1d6f3b2c7e9a0d54</code></pre>
+        </div>
+
+        <div class="dl-note">
+          <b>如何校验？</b><br>
+          Windows：<code>certutil -hashfile ReportDesk-1.0.0.jar SHA256</code><br>
+          Linux / macOS：<code>sha256sum ReportDesk-1.0.0.jar</code><br>
+          若输出与左侧一致，则文件完整可用。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 下载 FAQ ============ -->
+  <section class="dl-sec">
+    <div class="wrap">
+      <div class="dl-sec-head">
+        <h2>下载常见问题</h2>
+        <p>更多安装与配置问题请参考主页的完整 FAQ。</p>
+      </div>
+
+      <div class="dl-faq">
+        <details open>
+          <summary>下载后放入 plugins 目录却没有加载？</summary>
+          <p>请确认服务端为 Paper 1.20 及以上、Java 版本 ≥ 17，并查看控制台是否有报错。Spigot 端不保证兼容，建议改用 Paper。</p>
+        </details>
+        <details>
+          <summary>jar 文件被浏览器或杀毒软件拦截怎么办？</summary>
+          <p>部分安全软件会对未签名的 jar 误报。请核对 SHA-256 后再放行；如仍有疑虑，可从 Hangar 或 Modrinth 渠道下载同一构建。</p>
+        </details>
+        <details>
+          <summary>可以下载旧版本吗？</summary>
+          <p>可以。GitHub Releases 页面保留了历史构建，但旧版本可能缺少修复与新特性，不建议长期使用。</p>
+        </details>
+        <details>
+          <summary>是否提供源码构建？</summary>
+          <p>项目以 GPL-3.0 开源，可克隆 <a href="https://github.com/leocodes-mc/ReportDesk" target="_blank" rel="noopener">GitHub 仓库</a> 后使用 Maven 自行构建。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="dl-footer">
+  <div class="wrap">
+    <span>ReportDesk v1.0.0 · GPL-3.0 · Paper 1.20–1.21.x</span>
+    <nav aria-label="页脚导航">
+      <a href="index.html">主页</a>
+      <a href="index.html#install">安装文档</a>
+      <a href="https://github.com/leocodes-mc/ReportDesk" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://hangar.papermc.io/William/ReportDesk" target="_blank" rel="noopener">Hangar</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">已复制</div>
+
+<script>
+/* 复制按钮（页面级，独立于主站 app.js） */
+(function(){
+  var toast = document.getElementById('toast');
+  var timer;
+  function showToast(msg){
+    toast.textContent = msg || '已复制';
+    toast.classList.add('show');
+    clearTimeout(timer);
+    timer = setTimeout(function(){ toast.classList.remove('show'); }, 1600);
+  }
+  document.querySelectorAll('[data-copybtn]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var code = btn.closest('.dl-code').querySelector('[data-copy]');
+      if(!code) return;
+      var text = code.textContent;
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){ showToast('已复制'); },
+          function(){ showToast('复制失败，请手动选择'); });
+      }else{
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); showToast('已复制'); }
+        catch(e){ showToast('复制失败，请手动选择'); }
+        document.body.removeChild(ta);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
