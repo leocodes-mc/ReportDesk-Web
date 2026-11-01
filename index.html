@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReportDesk — Minecraft 玩家举报工作台</title>
+<meta name="description" content="ReportDesk：面向 Paper 1.20–1.21.x 的完整玩家举报工作台。GUI 提交、管理受理工作流、异步持久化、审计日志、可整体开关的证据增强层。">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <img src="icon.png" alt="ReportDesk logo" width="34" height="34">
+      <span>ReportDesk</span>
+    </a>
+    <nav class="links" id="navLinks">
+      <a href="#features">特性</a>
+      <a href="#commands">命令</a>
+      <a href="#enhancements">增强层</a>
+      <a href="#permissions">权限</a>
+      <a href="#config">配置</a>
+      <a href="#architecture">架构</a>
+      <a href="#roadmap">路线图</a>
+      <a href="#install">安装</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="菜单">☰</button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-badge">Paper 1.20 – 1.21.x · Java 17+ · GPL-3.0</div>
+    <h1>把"玩家举报 → 管理员受理 → 结案归档"<br>做成一条完整的产品流程</h1>
+    <p class="hero-sub">
+      面向 Minecraft 服务器的<strong>玩家举报工作台</strong>：图形化提交、管理受理工作流、
+      异步持久化、审计日志，以及可整体开关的证据采集增强层。
+    </p>
+    <div class="hero-cta">
+      <a class="btn primary" href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar" target="_blank" rel="noopener">下载 1.0.0 jar</a>
+      <a class="btn ghost" href="#install">开始使用</a>
+    </div>
+    <div class="hero-distros">
+      <a class="distro" href="https://github.com/leocodes-mc/ReportDesk" target="_blank" rel="noopener">GitHub</a>
+      <a class="distro" href="https://hangar.papermc.io/William/ReportDesk" target="_blank" rel="noopener">Hangar</a>
+      <a class="distro" href="https://modrinth.com/plugin/reportdesk" target="_blank" rel="noopener">Modrinth</a>
+    </div>
+    <div class="hero-stats">
+      <div><b data-count="184">0</b><span>单元测试全绿</span></div>
+      <div><b>0</b><span>主线程文件 IO</span></div>
+      <div><b>7</b><span>内置分类</span></div>
+      <div><b>30+</b><span>管理子命令</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GROUP A · 产品 ============ -->
+<div class="group">
+  <div class="wrap"><div class="group-bar">
+    <span class="group-tag">A</span>
+    <b>产品</b>
+    <i>它是什么 · 解决什么</i>
+  </div></div>
+
+  <!-- 01 FEATURES -->
+  <section class="sec" id="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">01</span>
+        <h2>核心特性</h2>
+        <p>基础功能开箱即用；证据增强层默认全关，需要时再开。</p>
+      </div>
+      <div class="grid feat">
+        <div class="card"><div class="card-ico">▤</div><h3>举报 GUI</h3><p>玩家开举报工作台：选对象 → 选分类 → 填详情 → 确认。管理端独立界面，支持认领、关闭、重开、删除、导出。</p></div>
+        <div class="card"><div class="card-ico">✎</div><h3>管理受理工作流</h3><p>认领 → 处理 → 结案。优先级与 SLA 超时提醒，结案裁决：成立 / 不成立 / 重复 / 证据不足。</p></div>
+        <div class="card"><div class="card-ico">≣</div><h3>异步持久化</h3><p>举报、证据、审计全部异步落盘。reports.json 采用 WAL + 周期压缩，高频操作只追加一行。</p></div>
+        <div class="card"><div class="card-ico">🛡</div><h3>审计日志</h3><p>管理操作全量记录，按天分文件，保留天数与自动清理可配。每个管理动作可回溯。</p></div>
+        <div class="card"><div class="card-ico">◈</div><h3>证据增强层</h3><p>上下文快照、移动轨迹、自动检测、联动处罚，全部独立开关、默认关闭，关闭时入口一次判断直接返回。</p></div>
+        <div class="card"><div class="card-ico">⇄</div><h3>对话与通知</h3><p>玩家与管理员可在举报下互相回复；离线队列补发、关注列表提醒、Discord Webhook 推送。</p></div>
+      </div>
+
+      <!-- GUI 流程演示 -->
+      <div class="demo">
+        <div class="demo-title">举报 GUI 流程</div>
+        <div class="demo-steps">
+          <div class="step active" data-step="1"><i>1</i><b>选择玩家</b><small>在线 / 离线目标列表</small></div>
+          <div class="step-arrow">→</div>
+          <div class="step" data-step="2"><i>2</i><b>选择分类</b><small>7 个内置分类，语言跟随切换</small></div>
+          <div class="step-arrow">→</div>
+          <div class="step" data-step="3"><i>3</i><b>填写详情</b><small>长度与非法字符自动校验</small></div>
+          <div class="step-arrow">→</div>
+          <div class="step" data-step="4"><i>4</i><b>确认提交</b><small>入队异步落盘 + 通知</small></div>
+        </div>
+        <p class="demo-note">每个分类项的图标、名称与描述随 <code>language</code> 配置切换；提交瞬间可选采集目标现场快照（默认关闭）。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 COMMANDS -->
+  <section class="sec" id="commands">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">02</span>
+        <h2>命令参考</h2>
+        <p>玩家侧 <code>/report</code>（别名 <code>rdreport</code>、<code>jb</code>）；管理侧 <code>/reports</code>（别名 <code>reportdesk</code>、<code>rd</code>）。</p>
+      </div>
+      <div class="cmd-cols">
+        <div class="cmd-block">
+          <h3>玩家侧 · /report <span class="tag">reportdesk.report</span></h3>
+          <table class="cmd-table">
+            <tr><td><code>/report</code></td><td>打开举报 GUI</td></tr>
+            <tr><td><code>/report &lt;玩家&gt;</code></td><td>对某玩家发起举报</td></tr>
+            <tr><td><code>/report &lt;玩家&gt; &lt;分类&gt; [详情...]</code></td><td>直接提交，跳过 GUI</td></tr>
+            <tr><td><code>/report status [页码]</code></td><td>查看我提交的举报</td></tr>
+            <tr><td><code>/report view &lt;id&gt;</code></td><td>查看某条举报详情</td></tr>
+            <tr><td><code>/report reply &lt;id&gt; &lt;内容&gt;</code></td><td>回复自己的举报</td></tr>
+            <tr><td><code>/report cancel</code></td><td>取消正在输入的举报</td></tr>
+          </table>
+        </div>
+        <div class="cmd-block">
+          <h3>管理侧 · /reports <span class="tag">reportdesk.admin</span></h3>
+          <table class="cmd-table">
+            <tr><td><code>menu</code> / <code>list</code></td><td>管理 GUI / 文字列表</td></tr>
+            <tr><td><code>view</code> <code>claim</code> <code>release</code></td><td>查看 / 认领 / 释放</td></tr>
+            <tr><td><code>close &lt;id&gt; &lt;裁决&gt; [备注]</code></td><td>结案（resolved / rejected / duplicate / insufficient）</td></tr>
+            <tr><td><code>reopen</code> <code>delete</code> <code>purge</code></td><td>重开 / 删除 / 清理过期</td></tr>
+            <tr><td><code>overdue</code> <code>stats</code> <code>export</code></td><td>超时列表 / 统计 / 导出 CSV</td></tr>
+            <tr><td><code>watch</code> <code>watching</code></td><td>关注列表</td></tr>
+            <tr><td><code>audit</code> <code>reload</code> <code>config ...</code></td><td>审计 / 重载 / 游戏内改配置</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="example">
+        <div class="example-label">示例</div>
+        <pre class="code"><code data-copy>/reports close 42 resolved 已核实飞行截图
+/reports watch Notch
+/reports config set limits.cooldown-seconds 120</code></pre>
+        <button class="copy-btn" data-copybtn>复制</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 ENHANCEMENTS -->
+  <section class="sec" id="enhancements">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">03</span>
+        <h2>证据增强层</h2>
+        <p>全部默认关闭，关闭时不注册高频事件、不做额外主线程计算。想开哪块开哪块。</p>
+      </div>
+      <div class="grid enh">
+        <div class="card off"><span class="switch-pill">默认关</span><h3>现场快照</h3><p>提交瞬间异步采集目标位置、游戏模式、血量、物品栏、聊天、ping。</p></div>
+        <div class="card off"><span class="switch-pill">默认关</span><h3>方块破坏采样</h3><p>启用后才注册 <code>BlockBreakEvent</code>，内存保留每玩家最近破坏样本。</p></div>
+        <div class="card off"><span class="switch-pill">默认关</span><h3>移动轨迹</h3><p>启用后才注册 <code>PlayerMoveEvent</code>，按 tick 采样，结案后 GUI 回放。</p></div>
+        <div class="card off"><span class="switch-pill">默认关</span><h3>自动检测</h3><p>阈值触发自动报告，只生成举报 / 通知，<b>不会处罚</b>。</p></div>
+        <div class="card off"><span class="switch-pill">默认关</span><h3>联动处罚</h3><p>结案后按裁决执行预设命令，占位符 <code>%player% %reason% %verdict%</code>…</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ GROUP B · 使用 ============ -->
+<div class="group">
+  <div class="wrap"><div class="group-bar">
+    <span class="group-tag">B</span>
+    <b>使用</b>
+    <i>授权 · 调参 · 本地化</i>
+  </div></div>
+
+  <!-- 04 PERMISSIONS -->
+  <section class="sec" id="permissions">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">04</span>
+        <h2>权限节点</h2>
+        <p><code>reportdesk.admin</code> 是管理总闸；无权限时不会执行操作，只提示"没有权限"。</p>
+      </div>
+      <table class="perm-table">
+        <tr><th>节点</th><th>说明</th><th>默认</th></tr>
+        <tr><td><code>reportdesk.report</code></td><td>提交举报（/report）</td><td class="def-open">所有人</td></tr>
+        <tr><td><code>reportdesk.bypass.limits</code></td><td>绕过冷却与每日上限</td><td class="def-off">关闭</td></tr>
+        <tr><td><code>reportdesk.bypass.evidence</code></td><td>不被增强层采集</td><td class="def-off">关闭</td></tr>
+        <tr><td><code>reportdesk.admin</code></td><td>管理总闸（/reports）</td><td class="def-op">op</td></tr>
+        <tr><td><code>reportdesk.admin.close</code></td><td>关闭 / 重开举报</td><td class="def-op">op</td></tr>
+        <tr><td><code>reportdesk.admin.delete</code></td><td>删除 / 清除</td><td class="def-op">op</td></tr>
+        <tr><td><code>reportdesk.notify</code></td><td>接收新举报通知</td><td class="def-op">op</td></tr>
+        <tr><td><code>reportdesk.evidence</code></td><td>查看证据快照</td><td class="def-op">op</td></tr>
+        <tr><td><code>reportdesk.reload</code> / <code>config</code></td><td>重载 / 游戏内改配置</td><td class="def-op">op</td></tr>
+        <tr><td><code>reportdesk.watch</code></td><td>关注列表</td><td class="def-op">op</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 05 CONFIG -->
+  <section class="sec" id="config">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">05</span>
+        <h2>配置</h2>
+        <p>所有业务阈值都在 <code>config.yml</code>，代码不硬编码。缺失或非法值自动回退默认并告警。</p>
+      </div>
+      <div class="grid conf">
+        <div class="card"><h3>限流 limits</h3><p>命令冷却 1000ms · 举报冷却 60s · 每日上限 10 · 同目标间隔 300s · 重复窗口 600s · 同目标未处理 ≤3</p></div>
+        <div class="card"><h3>保留与自动处理</h3><p>已结案保留 90 天 · 超时 14 天自动结案 · 维护任务每 30 分钟 · 分页 10 / GUI 28</p></div>
+        <div class="card"><h3>优先级与 SLA</h3><p>urgent 2h · high 6h · normal 24h · low 72h；惯犯达 3 条未处理自动提升到 high</p></div>
+        <div class="card"><h3>游戏内改配置</h3><p><code>/reports config set &lt;路径&gt; &lt;值&gt;</code>，写前自动备份 config.yml，失败自动回滚</p></div>
+        <div class="card"><h3>Webhook</h3><p>Discord 异步推送 created / claimed / closed 事件，10s 超时，默认关闭</p></div>
+        <div class="card"><h3>分类</h3><p>7 个内置分类可增删，键名即分类 ID，display 为兜底值、语言文件优先</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 I18N -->
+  <section class="sec" id="i18n">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">06</span>
+        <h2>多语言</h2>
+        <p>全部自带文案放在 <code>lang/*.yml</code>，通过 MiniMessage 渲染。改 <code>language</code> 即可切换。</p>
+      </div>
+      <div class="i18n-cols">
+        <div class="i18n-block">
+          <h3>三层合并</h3>
+          <ol>
+            <li><b>bundled</b> — jar 内置语言文件，保证升级后新 key 一定在</li>
+            <li><b>fallback</b> — 另一份内置语言，结构兜底</li>
+            <li><b>primary</b> — 磁盘上的 <code>plugins/ReportDesk/lang/&lt;language&gt;.yml</code>，管理员自定义</li>
+          </ol>
+        </div>
+        <div class="i18n-block">
+          <h3>分类本地化</h3>
+          <p>分类名 / 描述<b>优先</b>读语言文件 <code>categories.&lt;id&gt;.name</code>，取不到才回落 config 的 <code>display</code>。"内置 7 分类"切语言会跟着变；自己新增的分类没写语言条目时自动用 config 值。</p>
+        </div>
+        <div class="i18n-block">
+          <h3>安全渲染</h3>
+          <p>占位符用 <code>%name%</code> 记法，渲染时自动转成未解析占位符 —— <b>玩家输入不会被当作 MiniMessage 解析</b>，杜绝格式注入。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ GROUP C · 技术 ============ -->
+<div class="group">
+  <div class="wrap"><div class="group-bar">
+    <span class="group-tag">C</span>
+    <b>技术</b>
+    <i>内部怎么跑 · 接下来做什么</i>
+  </div></div>
+
+  <!-- 07 ARCHITECTURE -->
+  <section class="sec" id="architecture">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">07</span>
+        <h2>架构</h2>
+        <p>纯逻辑层与 Bukkit 胶水层分离，184 单测全部跑在无 Bukkit 依赖的 JVM 上。</p>
+      </div>
+      <div class="arch-cols">
+        <div class="arch-block">
+          <h3>线程模型</h3>
+          <table class="mini-table">
+            <tr><td>主线程</td><td>命令 / GUI / 事件 · <b>零文件 IO</b></td></tr>
+            <tr><td>存储线程池</td><td>reports.json · WAL · 审计 · 证据落盘</td></tr>
+            <tr><td>维护任务</td><td>自动关闭 · SLA 检查 · 清理过期数据</td></tr>
+            <tr><td>Webhook</td><td>sendAsync，10s 超时，非阻塞</td></tr>
+          </table>
+        </div>
+        <div class="arch-block">
+          <h3>存储格式</h3>
+          <pre class="code small"><code>reports.json     权威数据（周期压缩产物）
+reports.log      WAL 追加日志（每行一条）
+evidence/        证据快照（按举报 id）
+audit/           审计日志（按天分文件）
+pending-notices  离线举报人待补发通知</code></pre>
+        </div>
+        <div class="arch-block">
+          <h3>模块分层</h3>
+          <pre class="code small"><code>command/   命令层（薄）
+core/      纯逻辑（可单测，无 Bukkit）
+service/   胶水层（Bukkit 交互）
+storage/   文件 / 审计 / CSV 导出
+gui/       玩家 GUI + 管理 GUI
+i18n/      Messages + 900+ key 常量</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 ROADMAP -->
+  <section class="sec" id="roadmap">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">08</span>
+        <h2>路线图 · v1.1.0</h2>
+        <p>在 v1.0.0 完整工作流之上，补齐"多人协作、可观测性、数据深度"。详见仓库 <code>ROADMAP.md</code>。</p>
+      </div>
+      <div class="roadmap">
+        <div class="rm-group">
+          <div class="rm-label">P0 · 数据与可靠性</div>
+          <div class="rm-items">
+            <span>数据迁移框架</span><span>记录字段扩展</span><span>已知缺陷修复</span>
+          </div>
+        </div>
+        <div class="rm-group">
+          <div class="rm-label">P1 · 协作与可观测性</div>
+          <div class="rm-items">
+            <span>指派与转派</span><span>SLA 报表</span><span>双 Webhook 分流</span><span>数据看板</span><span>审计防篡改</span>
+          </div>
+        </div>
+        <div class="rm-group">
+          <div class="rm-label">P2 · 体验与扩展</div>
+          <div class="rm-items">
+            <span>更多举报入口</span><span>富文本</span><span>轨迹回放</span><span>检测策略插件化</span><span>生态互通</span><span>批量操作</span><span>语言热加载</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ GROUP D · 资源 ============ -->
+<div class="group">
+  <div class="wrap"><div class="group-bar">
+    <span class="group-tag">D</span>
+    <b>资源</b>
+    <i>上手 · 源码 · 下载</i>
+  </div></div>
+
+  <!-- 09 INSTALL -->
+  <section class="sec" id="install">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">09</span>
+        <h2>安装</h2>
+        <p>无外部依赖，Gson / Adventure / MiniMessage 均由 Paper 提供。</p>
+      </div>
+      <div class="install-grid">
+        <div class="card"><span class="step-no">1</span><h3>放入插件</h3><p>把 <code>ReportDesk-1.0.0.jar</code> 丢进服务端 <code>plugins/</code> 目录。</p></div>
+        <div class="card"><span class="step-no">2</span><h3>启动</h3><p>服务器生成 <code>plugins/ReportDesk/config.yml</code> 与语言文件。</p></div>
+        <div class="card"><span class="step-no">3</span><h3>开始使用</h3><p>玩家 <code>/report</code>，管理员 <code>/reports</code>。增强层默认关，需要哪块开哪块。</p></div>
+      </div>
+      <div class="install-meta">
+        <div><b>服务端</b><span>Paper 1.20 – 1.21.x（api-version '1.20'）</span></div>
+        <div><b>JDK</b><span>Java 17+</span></div>
+        <div><b>许可</b><span>GPL-3.0-or-later</span></div>
+        <div><b>热加载</b><span>/reports reload（除 storage.directory 外）</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPOS -->
+  <section class="sec" id="repos">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-no">10</span>
+        <h2>获取与源码</h2>
+        <p>三个分发渠道任选其一；构建命令 <code>./gradlew clean test build</code>。</p>
+      </div>
+      <div class="repo-grid">
+        <a class="repo" href="https://github.com/leocodes-mc/ReportDesk" target="_blank" rel="noopener" title="GitHub 仓库">
+          <span class="repo-mark">⎇</span>
+          <span class="repo-txt"><b>GitHub</b><i>leocodes-mc / ReportDesk</i></span>
+          <span class="repo-go">→</span>
+        </a>
+        <a class="repo" href="https://hangar.papermc.io/William/ReportDesk" target="_blank" rel="noopener" title="Hangar 分发页">
+          <span class="repo-mark">▣</span>
+          <span class="repo-txt"><b>Hangar</b><i>William / ReportDesk</i></span>
+          <span class="repo-go">→</span>
+        </a>
+        <a class="repo" href="https://modrinth.com/plugin/reportdesk" target="_blank" rel="noopener" title="Modrinth 分发页">
+          <span class="repo-mark">◆</span>
+          <span class="repo-txt"><b>Modrinth</b><i>plugin / reportdesk</i></span>
+          <span class="repo-go">→</span>
+        </a>
+        <a class="repo repo-dl" href="https://github.com/leocodes-mc/ReportDesk/releases/download/v1.0.0/ReportDesk-1.0.0.jar" target="_blank" rel="noopener" title="直接下载 1.0.0">
+          <span class="repo-mark">↓</span>
+          <span class="repo-txt"><b>发行版</b><i>ReportDesk-1.0.0.jar</i></span>
+          <span class="repo-go">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer-top">
+    <div class="footer-brand">
+      <img src="icon.png" alt="" width="28" height="28">
+      <span>ReportDesk <small>v1.0.0</small></span>
+    </div>
+    <div class="footer-links">
+      <a href="#features">特性</a><a href="#commands">命令</a><a href="#config">配置</a>
+      <a href="#architecture">架构</a><a href="#roadmap">路线图</a><a href="#install">安装</a>
+    </div>
+  </div>
+  <div class="wrap footer-note">© 2026 · GNU General Public License v3.0-or-later</div>
+</footer>
+
+<div class="toast" id="toast">已复制</div>
+<div class="progress" id="progress"></div>
+<button class="totop" id="toTop" aria-label="回到顶部">↑</button>
+
+<script src="js/main.js"></script>
+</body>
+</html>
